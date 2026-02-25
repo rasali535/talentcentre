@@ -1,22 +1,8 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { 
-  Sun,
-  LayoutDashboard,
-  Package,
-  FileText,
-  CreditCard,
-  Settings,
-  LogOut,
-  Bell,
-  Search,
-  Truck,
-  MapPin,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  ArrowRight
+  Sun, LayoutDashboard, Package, FileText, CreditCard, Settings, LogOut, Bell, Search, Truck, MapPin, Clock, CheckCircle2, AlertCircle, ArrowRight, ArrowLeft, Download, Upload, Eye, Filter
 } from 'lucide-react';
 
 export default function ClientPortal() {
@@ -29,12 +15,26 @@ export default function ClientPortal() {
     { id: 'SL-88395', origin: 'Gaborone, BW', destination: 'Harare, ZW', status: 'Pending Pickup', eta: 'Oct 30, 2023', type: 'Flat deck' },
   ];
 
+  const documents = [
+    { id: 'DOC-1029', name: 'Customs Clearance Form - SL-88393', type: 'PDF', date: 'Oct 25, 2023', size: '2.4 MB' },
+    { id: 'DOC-1028', name: 'Bill of Lading - SL-88392', type: 'PDF', date: 'Oct 24, 2023', size: '1.1 MB' },
+    { id: 'DOC-1027', name: 'Service Agreement 2023', type: 'PDF', date: 'Jan 15, 2023', size: '5.8 MB' },
+  ];
+
+  const invoices = [
+    { id: 'INV-2023-089', date: 'Oct 24, 2023', amount: '$1,250.00', status: 'Unpaid', due: 'Nov 24, 2023' },
+    { id: 'INV-2023-075', date: 'Sep 20, 2023', amount: '$3,400.00', status: 'Paid', due: 'Oct 20, 2023' },
+    { id: 'INV-2023-062', date: 'Aug 15, 2023', amount: '$890.00', status: 'Paid', due: 'Sep 15, 2023' },
+  ];
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'In Transit': return 'text-blue-600 bg-blue-50 border-blue-200';
       case 'Customs Clearance': return 'text-amber-600 bg-amber-50 border-amber-200';
       case 'Delivered': return 'text-emerald-600 bg-emerald-50 border-emerald-200';
       case 'Pending Pickup': return 'text-slate-600 bg-slate-50 border-slate-200';
+      case 'Paid': return 'text-emerald-600 bg-emerald-50 border-emerald-200';
+      case 'Unpaid': return 'text-rose-600 bg-rose-50 border-rose-200';
       default: return 'text-slate-600 bg-slate-50 border-slate-200';
     }
   };
@@ -94,6 +94,9 @@ export default function ClientPortal() {
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium hover:bg-slate-800 hover:text-white transition-colors">
             <Settings className="w-5 h-5" /> Settings
           </button>
+          <Link to="/" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-orange-400 transition-colors mt-2">
+            <ArrowLeft className="w-5 h-5" /> Back to Website
+          </Link>
           <Link to="/login" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-orange-400 transition-colors mt-2">
             <LogOut className="w-5 h-5" /> Sign Out
           </Link>
@@ -133,109 +136,323 @@ export default function ClientPortal() {
 
         {/* Dashboard Content */}
         <div className="p-8 flex-1">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-6xl mx-auto"
-          >
-            <div className="flex justify-between items-end mb-8">
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900 mb-1">Welcome back, Acme Corp</h1>
-                <p className="text-slate-500 text-sm">Here is what's happening with your logistics today.</p>
-              </div>
-              <button className="bg-orange-500 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors shadow-sm shadow-orange-500/20 flex items-center gap-2">
-                <Package className="w-4 h-4" /> Request New Quote
-              </button>
-            </div>
-
-            {/* Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
-                    <Truck className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <span className="text-sm font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">+2 this week</span>
+          {activeTab === 'dashboard' && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-6xl mx-auto"
+            >
+              <div className="flex justify-between items-end mb-8">
+                <div>
+                  <h1 className="text-2xl font-bold text-slate-900 mb-1">Welcome back, Acme Corp</h1>
+                  <p className="text-slate-500 text-sm">Here is what's happening with your logistics today.</p>
                 </div>
-                <p className="text-slate-500 text-sm font-medium mb-1">Active Shipments</p>
-                <h3 className="text-3xl font-bold text-slate-900">4</h3>
-              </div>
-              
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6 text-emerald-600" />
-                  </div>
-                </div>
-                <p className="text-slate-500 text-sm font-medium mb-1">Delivered This Month</p>
-                <h3 className="text-3xl font-bold text-slate-900">12</h3>
+                <button className="bg-orange-500 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors shadow-sm shadow-orange-500/20 flex items-center gap-2">
+                  <Package className="w-4 h-4" /> Request New Quote
+                </button>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center">
-                    <AlertCircle className="w-6 h-6 text-amber-600" />
+              {/* Metrics */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                      <Truck className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <span className="text-sm font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">+2 this week</span>
                   </div>
-                  <span className="text-sm font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full">2 pending</span>
+                  <p className="text-slate-500 text-sm font-medium mb-1">Active Shipments</p>
+                  <h3 className="text-3xl font-bold text-slate-900">4</h3>
                 </div>
-                <p className="text-slate-500 text-sm font-medium mb-1">Customs Clearance</p>
-                <h3 className="text-3xl font-bold text-slate-900">1</h3>
-              </div>
-            </div>
+                
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center">
+                      <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                    </div>
+                  </div>
+                  <p className="text-slate-500 text-sm font-medium mb-1">Delivered This Month</p>
+                  <h3 className="text-3xl font-bold text-slate-900">12</h3>
+                </div>
 
-            {/* Recent Shipments Table */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-              <div className="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50/50">
-                <h2 className="text-lg font-bold text-slate-900">Recent Shipments</h2>
-                <button className="text-sm font-medium text-orange-600 hover:text-orange-700">View All</button>
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center">
+                      <AlertCircle className="w-6 h-6 text-amber-600" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full">2 pending</span>
+                  </div>
+                  <p className="text-slate-500 text-sm font-medium mb-1">Customs Clearance</p>
+                  <h3 className="text-3xl font-bold text-slate-900">1</h3>
+                </div>
               </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-slate-200 bg-slate-50/50 text-xs uppercase tracking-wider text-slate-500 font-semibold">
-                      <th className="px-6 py-4">Tracking ID</th>
-                      <th className="px-6 py-4">Route</th>
-                      <th className="px-6 py-4">Type</th>
-                      <th className="px-6 py-4">Status</th>
-                      <th className="px-6 py-4">ETA</th>
-                      <th className="px-6 py-4 text-right">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {shipments.map((shipment) => (
-                      <tr key={shipment.id} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="px-6 py-4">
-                          <span className="font-semibold text-slate-900">{shipment.id}</span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="flex items-center gap-2 text-sm">
-                            <span className="text-slate-900 font-medium">{shipment.origin}</span>
-                            <ArrowRight className="w-3 h-3 text-slate-400" />
-                            <span className="text-slate-900 font-medium">{shipment.destination}</span>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="text-sm text-slate-600">{shipment.type}</span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(shipment.status)}`}>
-                            {getStatusIcon(shipment.status)}
-                            {shipment.status}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="text-sm text-slate-600">{shipment.eta}</span>
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <button className="text-sm font-medium text-orange-600 hover:text-orange-700">Track</button>
-                        </td>
+
+              {/* Recent Shipments Table */}
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50/50">
+                  <h2 className="text-lg font-bold text-slate-900">Recent Shipments</h2>
+                  <button onClick={() => setActiveTab('shipments')} className="text-sm font-medium text-orange-600 hover:text-orange-700">View All</button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-200 bg-slate-50/50 text-xs uppercase tracking-wider text-slate-500 font-semibold">
+                        <th className="px-6 py-4">Tracking ID</th>
+                        <th className="px-6 py-4">Route</th>
+                        <th className="px-6 py-4">Type</th>
+                        <th className="px-6 py-4">Status</th>
+                        <th className="px-6 py-4">ETA</th>
+                        <th className="px-6 py-4 text-right">Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {shipments.map((shipment) => (
+                        <tr key={shipment.id} className="hover:bg-slate-50/50 transition-colors">
+                          <td className="px-6 py-4">
+                            <span className="font-semibold text-slate-900">{shipment.id}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-2 text-sm">
+                              <span className="text-slate-900 font-medium">{shipment.origin}</span>
+                              <ArrowRight className="w-3 h-3 text-slate-400" />
+                              <span className="text-slate-900 font-medium">{shipment.destination}</span>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{shipment.type}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(shipment.status)}`}>
+                              {getStatusIcon(shipment.status)}
+                              {shipment.status}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{shipment.eta}</span>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <button className="text-sm font-medium text-orange-600 hover:text-orange-700">Track</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
+
+          {activeTab === 'shipments' && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-6xl mx-auto"
+            >
+              <div className="flex justify-between items-end mb-8">
+                <div>
+                  <h1 className="text-2xl font-bold text-slate-900 mb-1">Active Shipments</h1>
+                  <p className="text-slate-500 text-sm">Track and manage your ongoing deliveries.</p>
+                </div>
+                <button className="bg-white border border-slate-200 text-slate-700 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors flex items-center gap-2">
+                  <Filter className="w-4 h-4" /> Filter
+                </button>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-200 bg-slate-50/50 text-xs uppercase tracking-wider text-slate-500 font-semibold">
+                        <th className="px-6 py-4">Tracking ID</th>
+                        <th className="px-6 py-4">Route</th>
+                        <th className="px-6 py-4">Type</th>
+                        <th className="px-6 py-4">Status</th>
+                        <th className="px-6 py-4">ETA</th>
+                        <th className="px-6 py-4 text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {shipments.map((shipment) => (
+                        <tr key={shipment.id} className="hover:bg-slate-50/50 transition-colors">
+                          <td className="px-6 py-4">
+                            <span className="font-semibold text-slate-900">{shipment.id}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-2 text-sm">
+                              <span className="text-slate-900 font-medium">{shipment.origin}</span>
+                              <ArrowRight className="w-3 h-3 text-slate-400" />
+                              <span className="text-slate-900 font-medium">{shipment.destination}</span>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{shipment.type}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(shipment.status)}`}>
+                              {getStatusIcon(shipment.status)}
+                              {shipment.status}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{shipment.eta}</span>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <button className="text-sm font-medium text-orange-600 hover:text-orange-700">Track</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'documents' && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-6xl mx-auto"
+            >
+              <div className="flex justify-between items-end mb-8">
+                <div>
+                  <h1 className="text-2xl font-bold text-slate-900 mb-1">Documents</h1>
+                  <p className="text-slate-500 text-sm">Access your customs forms, BOLs, and contracts.</p>
+                </div>
+                <button className="bg-orange-500 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors flex items-center gap-2">
+                  <Upload className="w-4 h-4" /> Upload Document
+                </button>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-200 bg-slate-50/50 text-xs uppercase tracking-wider text-slate-500 font-semibold">
+                        <th className="px-6 py-4">Document Name</th>
+                        <th className="px-6 py-4">Type</th>
+                        <th className="px-6 py-4">Date Added</th>
+                        <th className="px-6 py-4">Size</th>
+                        <th className="px-6 py-4 text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {documents.map((doc) => (
+                        <tr key={doc.id} className="hover:bg-slate-50/50 transition-colors">
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-3">
+                              <FileText className="w-5 h-5 text-slate-400" />
+                              <span className="font-medium text-slate-900">{doc.name}</span>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{doc.type}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{doc.date}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{doc.size}</span>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <div className="flex justify-end gap-3">
+                              <button className="text-slate-400 hover:text-orange-600 transition-colors"><Eye className="w-5 h-5" /></button>
+                              <button className="text-slate-400 hover:text-orange-600 transition-colors"><Download className="w-5 h-5" /></button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'billing' && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-6xl mx-auto"
+            >
+              <div className="flex justify-between items-end mb-8">
+                <div>
+                  <h1 className="text-2xl font-bold text-slate-900 mb-1">Billing & Invoices</h1>
+                  <p className="text-slate-500 text-sm">Manage your payments and billing history.</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <p className="text-slate-500 text-sm font-medium mb-1">Outstanding Balance</p>
+                    <h3 className="text-4xl font-bold text-slate-900 mb-4">$1,250.00</h3>
+                  </div>
+                  <button className="w-full bg-slate-900 text-white px-5 py-3 rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors">
+                    Pay Now
+                  </button>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                  <h4 className="font-bold text-slate-900 mb-4">Payment Methods</h4>
+                  <div className="flex items-center justify-between p-4 border border-slate-200 rounded-xl mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-6 bg-slate-100 rounded flex items-center justify-center text-xs font-bold text-slate-600">VISA</div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-900">Visa ending in 4242</p>
+                        <p className="text-xs text-slate-500">Expires 12/24</p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">Default</span>
+                  </div>
+                  <button className="text-sm font-medium text-orange-600 hover:text-orange-700">+ Add Payment Method</button>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="px-6 py-5 border-b border-slate-200 bg-slate-50/50">
+                  <h2 className="text-lg font-bold text-slate-900">Invoice History</h2>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-200 bg-slate-50/50 text-xs uppercase tracking-wider text-slate-500 font-semibold">
+                        <th className="px-6 py-4">Invoice ID</th>
+                        <th className="px-6 py-4">Date</th>
+                        <th className="px-6 py-4">Amount</th>
+                        <th className="px-6 py-4">Status</th>
+                        <th className="px-6 py-4">Due Date</th>
+                        <th className="px-6 py-4 text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {invoices.map((invoice) => (
+                        <tr key={invoice.id} className="hover:bg-slate-50/50 transition-colors">
+                          <td className="px-6 py-4">
+                            <span className="font-semibold text-slate-900">{invoice.id}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{invoice.date}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="font-medium text-slate-900">{invoice.amount}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(invoice.status)}`}>
+                              {invoice.status}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-sm text-slate-600">{invoice.due}</span>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <button className="text-slate-400 hover:text-orange-600 transition-colors"><Download className="w-5 h-5" /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </div>
       </main>
     </div>

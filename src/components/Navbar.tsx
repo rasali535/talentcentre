@@ -44,8 +44,8 @@ export default function Navbar() {
               <LogIn className="w-4 h-4" />
               Client Portal
             </Link>
-            <Link to="/contact" className="bg-orange-500 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-orange-600 transition-colors shadow-sm shadow-orange-500/20">
-              Get in Touch
+            <Link to="/book" className="bg-orange-500 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-orange-600 transition-colors shadow-sm shadow-orange-500/20">
+              Book a Service
             </Link>
           </div>
         </div>

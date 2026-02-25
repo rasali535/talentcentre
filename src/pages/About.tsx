@@ -87,10 +87,12 @@ export default function About() {
                 <div className="relative">
                   <div className="absolute inset-0 bg-orange-500 rounded-3xl transform translate-x-4 translate-y-4 opacity-20"></div>
                   <img 
-                    src="https://picsum.photos/seed/ceo/600/800" 
+                    src="/ceo.jpg" 
                     alt="Humphrey Chawafambira" 
-                    className="relative rounded-3xl object-cover w-full shadow-xl"
-                    referrerPolicy="no-referrer"
+                    className="relative rounded-3xl object-cover w-full shadow-xl aspect-[3/4]"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://picsum.photos/seed/ceo/600/800';
+                    }}
                   />
                   <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-lg">
                     <h3 className="text-2xl font-bold text-slate-900">Humphrey Chawafambira</h3>
