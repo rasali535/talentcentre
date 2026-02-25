@@ -94,8 +94,8 @@ export default function ClientPortal() {
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium hover:bg-slate-800 hover:text-white transition-colors">
             <Settings className="w-5 h-5" /> Settings
           </button>
-          <Link to="/" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-orange-400 transition-colors mt-2">
-            <LogOut className="w-5 h-5" /> Return to Website
+          <Link to="/login" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-orange-400 transition-colors mt-2">
+            <LogOut className="w-5 h-5" /> Sign Out
           </Link>
         </div>
       </aside>

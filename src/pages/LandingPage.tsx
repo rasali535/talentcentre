@@ -61,7 +61,7 @@ export default function LandingPage() {
               <a href="#contact" className="text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">Contact</a>
             </div>
             <div className="flex items-center gap-4">
-              <Link to="/portal" className="hidden sm:flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">
+              <Link to="/login" className="hidden sm:flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">
                 <LogIn className="w-4 h-4" />
                 Client Portal
               </Link>
