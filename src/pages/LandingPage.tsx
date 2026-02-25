@@ -424,7 +424,7 @@ export default function LandingPage() {
           
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-sm text-slate-500">
-              © {new Date().getFullYear()} Sunrise Logistics & Talent Centre. All rights reserved.
+              © {new Date().getFullYear()} Sunrise Logistics & Talent Centre. All rights reserved. Web Dev by Ras Ali.
             </div>
             <div className="flex gap-6 text-sm text-slate-500">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
