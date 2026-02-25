@@ -1,52 +1,43 @@
 # Hostinger Deployment Guide
 
-This project is a React application built with Vite and Tailwind CSS. To deploy it to Hostinger (Shared Hosting or Cloud Hosting), follow these steps.
+This project is now configured for **Hostinger Node.js Hosting**.
 
-## 1. Build the Project Locally
+## 1. Project Configuration
 
-Before uploading, you need to generate the production-ready files:
+- **Node Version**: 16.x
+- **Entry File**: `server.js`
+- **Package Manager**: npm
+
+## 2. Generate the Build
+
+Run the following command in your local terminal:
 
 ```bash
 npm run build
 ```
 
-This will create a `dist` folder in your project root containing all static assets (`index.html`, Javascript, CSS, and images).
-
-## 2. Prepare for Upload
-
-### SPA Routing Support
-
-We have already included a `.htaccess` file in the `public` folder. Vite automatically copies this to the `dist` folder during the build. This file ensures that if a user refreshes the page on a sub-route (like `/portal`), Hostinger's Apache server correctly serves `index.html`.
-
-### Gemini API Key
-
-If you are using the Gemini AI features, ensure your API key is correctly handled. In `vite.config.ts`, we use `process.env.GEMINI_API_KEY`.
-
-**Option A: Hardcoded (Easiest, but less secure)**
-Create a `.env` file in the root directory before running `npm run build`:
-
-```env
-GEMINI_API_KEY=your_actual_api_key_here
-```
-
-The key will be bundled into the Javascript files.
-
-**Option B: Environment Variables (Recommended)**
-If you use CI/CD (like GitHub Actions), set the secret in your repository settings and it will be used during the build.
+This will create a `dist` folder with your production-ready frontend assets.
 
 ## 3. Upload to Hostinger
 
 1. Log in to your **Hostinger hPanel**.
-2. Go to **Websites** -> **Manage** for your domain.
-3. Open the **File Manager**.
-4. Navigate to the `public_html` directory.
-5. Delete any existing files (like `default.php` or `index.php` if they aren't yours).
-6. Upload the **contents** of the `dist` folder (not the `dist` folder itself) to `public_html`.
-   - *Pro tip: Zip the contents of `dist`, upload the zip file, and extract it inside `public_html`.*
+2. Go to **Websites** -> **Manage** -> **Node.js**.
+3. Create/Configure the Node.js application:
+   - **Node.js Version**: Select **16**
+   - **Entry File**: `server.js`
+   - **App Domain**: Your domain
+4. Use the **File Manager** to upload your project files. You must upload:
+   - `dist/` (the entire folder)
+   - `server.js`
+   - `package.json`
+   - `package-lock.json`
+5. After uploading, return to the Node.js dashboard:
+   - Click **npm install** to install dependencies.
+   - Click **Start** or **Restart** to run the app.
 
 ## 4. Verification
 
-Once uploaded, visit your domain. The site should load, and navigation between pages (Landing, Login, Signup, Portal) should work smoothly.
+Once uploaded and running, visit your domain. The site should load, and navigation between pages (Landing, Login, Signup, Portal) should work smoothly via the Express server.
 
 ### Troubleshooting
 
