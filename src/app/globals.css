@@ -143,14 +143,14 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== GRADIENT TEXT ===== */
 .gradient-text {
-  background: linear-gradient(135deg, #2563EB, #D4A843);
+  background: linear-gradient(135deg, #A11C1C, #444D55);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-blue {
-  background: linear-gradient(135deg, #2563EB, #3B82F6);
+  background: linear-gradient(135deg, #A11C1C, #c22525);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -165,16 +165,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-premium:hover {
-  border-color: rgba(37, 99, 235, 0.3);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 40px rgba(37, 99, 235, 0.06);
+  border-color: rgba(161, 28, 28, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 40px rgba(161, 28, 28, 0.06);
   transform: translateY(-4px);
 }
 
 /* ===== GRID PATTERN ===== */
 .grid-pattern {
   background-image: 
-    linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(161, 28, 28, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(161, 28, 28, 0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -196,7 +196,7 @@ h1, h2, h3, h4, h5, h6 {
 .section-divider {
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #2563EB, #D4A843);
+  background: linear-gradient(90deg, #A11C1C, #444D55);
   border-radius: 3px;
 }
 
@@ -207,7 +207,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== CHATBOT STYLES ===== */
 .chat-bubble-user {
-  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  background: linear-gradient(135deg, #A11C1C, #7a1515);
   color: white;
   border-radius: 18px 18px 4px 18px;
 }
@@ -221,8 +221,8 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== FOCUS STYLES ===== */
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #2563EB;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: #A11C1C;
+  box-shadow: 0 0 0 3px rgba(161, 28, 28, 0.1);
 }
 
 /* ===== PULSE DOT ===== */
