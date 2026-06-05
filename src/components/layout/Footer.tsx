@@ -44,19 +44,13 @@ export default function Footer() {
       
       <div className="relative z-10">
         {/* Main Footer Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {/* Brand Column */}
             <div className="lg:col-span-1">
-              <Link href="/" className="flex items-center gap-3 mb-6 bg-white/10 p-2 rounded-xl border border-white/5 hover:bg-white/15 transition-colors">
-                <div className="relative w-12 h-12 flex items-center justify-center overflow-hidden rounded-lg bg-white">
+              <Link href="/" className="inline-block mb-6 bg-white/90 p-2 rounded-xl border border-white/20 shadow-sm transition-all duration-300">
+                <div className="relative w-32 h-14 flex items-center justify-center overflow-hidden rounded-lg">
                   <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain" />
-                </div>
-                <div>
-                  <span className="font-heading font-bold text-lg text-white">Talent Centre</span>
-                  <span className="block text-[9px] font-medium tracking-[0.1em] uppercase text-white/50">
-                    Training & Management
-                  </span>
                 </div>
               </Link>
               <p className="text-steel-300 text-sm leading-relaxed mb-6">
@@ -103,25 +97,6 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Services Links */}
-            <div>
-              <h4 className="font-heading font-semibold text-sm tracking-wider uppercase text-white/40 mb-6">
-                Services
-              </h4>
-              <ul className="space-y-3">
-                {footerLinks.services.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-steel-300 hover:text-white text-sm transition-colors duration-300 flex items-center gap-1 group"
-                    >
-                      {link.label}
-                      <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             {/* Contact Info */}
             <div>
@@ -188,7 +163,7 @@ export default function Footer() {
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-steel-400 text-xs">
-              © {currentYear} Talent Centre Consultancy. All rights reserved.
+              © {currentYear} Talent Centre. All rights reserved. | Web dev by Ras Ali Labs
             </p>
             <div className="flex items-center gap-6">
               <Link href="/privacy" className="text-steel-400 hover:text-white text-xs transition-colors duration-300">
