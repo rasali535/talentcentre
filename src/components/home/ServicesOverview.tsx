@@ -21,8 +21,8 @@ const services = [
     description:
       'Strategic planning, market entry strategies, business development, and operational optimization to accelerate growth.',
     href: '/services/business-consultancy',
-    color: 'text-accent-blue',
-    bg: 'bg-accent-blue/10',
+    color: 'text-accent-red',
+    bg: 'bg-accent-red/10',
   },
   {
     icon: Users,
@@ -91,13 +91,13 @@ export default function ServicesOverview() {
                   <div className={`w-14 h-14 rounded-2xl ${service.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                     <service.icon className={`w-7 h-7 ${service.color}`} />
                   </div>
-                  <h3 className="text-xl font-heading font-bold text-navy-700 mb-3 group-hover:text-accent-blue transition-colors duration-300">
+                  <h3 className="text-xl font-heading font-bold text-charcoal-700 mb-3 group-hover:text-accent-red transition-colors duration-300">
                     {service.title}
                   </h3>
                   <p className="text-steel-500 text-sm leading-relaxed mb-6">
                     {service.description}
                   </p>
-                  <div className="flex items-center gap-2 text-accent-blue text-sm font-semibold opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                  <div className="flex items-center gap-2 text-accent-red text-sm font-semibold opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                     Learn More
                     <ArrowUpRight className="w-4 h-4" />
                   </div>

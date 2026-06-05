@@ -26,9 +26,9 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
-        <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-accent-blue/5 rounded-full blur-3xl" />
+        <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-accent-red/5 rounded-full blur-3xl" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-medium tracking-wider uppercase mb-6">About Us</span>
@@ -57,7 +57,7 @@ export default function AboutPage() {
               <div className="space-y-3">
                 {['Evidence-based strategic advisory', 'Measurable outcomes and ROI', 'Cross-sector expertise', 'Long-term partnership model'].map((item) => (
                   <div key={item} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-accent-blue flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-accent-red flex-shrink-0" />
                     <span className="text-steel-700 font-medium text-sm">{item}</span>
                   </div>
                 ))}
@@ -87,17 +87,17 @@ export default function AboutPage() {
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
             <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-steel-200 p-8 md:p-12 text-center shadow-premium">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent-blue to-accent-blue-dark mx-auto mb-6 flex items-center justify-center">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent-red to-accent-red-dark mx-auto mb-6 flex items-center justify-center">
                 <span className="text-white font-heading font-bold text-3xl">HC</span>
               </div>
-              <h3 className="text-2xl font-heading font-bold text-navy-700 mb-2">Humphrey Chawafambira</h3>
-              <p className="text-accent-blue font-semibold mb-4">Principal Consultant & Founder</p>
+              <h3 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">Humphrey Chawafambira</h3>
+              <p className="text-accent-red font-semibold mb-4">Principal Consultant & Founder</p>
               <p className="text-steel-600 leading-relaxed mb-6">
                 With over 15 years of experience in business development, organizational consulting, and strategic advisory, Humphrey has guided hundreds of organizations across Southern Africa toward sustainable growth. His expertise spans government, corporate, SME, and NGO sectors, with a proven track record of delivering transformative outcomes.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 {['Strategic Planning', 'Business Development', 'Organizational Change', 'Executive Coaching'].map((s) => (
-                  <span key={s} className="px-3 py-1 rounded-full bg-accent-blue/10 text-accent-blue text-xs font-semibold">{s}</span>
+                  <span key={s} className="px-3 py-1 rounded-full bg-accent-red/10 text-accent-red text-xs font-semibold">{s}</span>
                 ))}
               </div>
             </div>
@@ -114,11 +114,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((v, i) => (
               <AnimatedSection key={v.title} delay={i * 0.1}>
-                <div className="text-center p-8 rounded-2xl bg-steel-50 border border-steel-100 hover:border-accent-blue/20 hover:shadow-glow-blue transition-all duration-400">
-                  <div className="w-14 h-14 rounded-2xl bg-accent-blue/10 flex items-center justify-center mx-auto mb-4">
-                    <v.icon className="w-7 h-7 text-accent-blue" />
+                <div className="text-center p-8 rounded-2xl bg-steel-50 border border-steel-100 hover:border-accent-red/20 hover:shadow-glow-blue transition-all duration-400">
+                  <div className="w-14 h-14 rounded-2xl bg-accent-red/10 flex items-center justify-center mx-auto mb-4">
+                    <v.icon className="w-7 h-7 text-accent-red" />
                   </div>
-                  <h3 className="font-heading font-bold text-navy-700 mb-2">{v.title}</h3>
+                  <h3 className="font-heading font-bold text-charcoal-700 mb-2">{v.title}</h3>
                   <p className="text-steel-500 text-sm">{v.desc}</p>
                 </div>
               </AnimatedSection>
@@ -138,13 +138,13 @@ export default function AboutPage() {
               <AnimatedSection key={m.year} delay={i * 0.08}>
                 <div className="flex gap-6 items-start">
                   <div className="w-20 flex-shrink-0 text-right">
-                    <span className="font-heading font-bold text-accent-blue text-lg">{m.year}</span>
+                    <span className="font-heading font-bold text-accent-red text-lg">{m.year}</span>
                   </div>
-                  <div className="w-3 h-3 rounded-full bg-accent-blue mt-2 flex-shrink-0 relative">
+                  <div className="w-3 h-3 rounded-full bg-accent-red mt-2 flex-shrink-0 relative">
                     {i < milestones.length - 1 && <div className="absolute top-3 left-1/2 -translate-x-1/2 w-px h-16 bg-steel-200" />}
                   </div>
                   <div className="pb-8">
-                    <h4 className="font-heading font-semibold text-navy-700">{m.title}</h4>
+                    <h4 className="font-heading font-semibold text-charcoal-700">{m.title}</h4>
                     <p className="text-steel-500 text-sm mt-1">{m.desc}</p>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>

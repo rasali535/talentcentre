@@ -14,7 +14,7 @@ const services = [
     tagline: 'Accelerate growth through strategic insight',
     description: 'We help organizations define strategy, enter new markets, optimize operations, and drive sustainable business development.',
     deliverables: ['Market Entry Strategy', 'Business Model Optimization', 'Growth Roadmaps', 'Competitive Analysis', 'Operational Efficiency Audits'],
-    color: 'text-accent-blue', bg: 'bg-accent-blue/10',
+    color: 'text-accent-red', bg: 'bg-accent-red/10',
   },
   {
     slug: 'talent-hr-advisory',
@@ -58,7 +58,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
@@ -83,8 +83,8 @@ export default function ServicesPage() {
                   <div className={`w-16 h-16 rounded-2xl ${service.bg} flex items-center justify-center mb-6`}>
                     <service.icon className={`w-8 h-8 ${service.color}`} />
                   </div>
-                  <h2 className="text-3xl font-heading font-bold text-navy-700 mb-2">{service.title}</h2>
-                  <p className="text-accent-blue font-semibold text-sm mb-4">{service.tagline}</p>
+                  <h2 className="text-3xl font-heading font-bold text-charcoal-700 mb-2">{service.title}</h2>
+                  <p className="text-accent-red font-semibold text-sm mb-4">{service.tagline}</p>
                   <p className="text-steel-600 leading-relaxed mb-6">{service.description}</p>
                   <Link href={`/services/${service.slug}`}>
                     <Button variant="outline" size="md" icon={<ArrowRight className="w-4 h-4" />}>
@@ -93,7 +93,7 @@ export default function ServicesPage() {
                   </Link>
                 </div>
                 <div className={`bg-steel-50 rounded-2xl p-8 border border-steel-100 ${idx % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <h4 className="font-heading font-semibold text-navy-700 mb-4">Key Deliverables</h4>
+                  <h4 className="font-heading font-semibold text-charcoal-700 mb-4">Key Deliverables</h4>
                   <div className="space-y-3">
                     {service.deliverables.map((d) => (
                       <div key={d} className="flex items-center gap-3">
@@ -111,7 +111,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>

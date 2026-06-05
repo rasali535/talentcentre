@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Mail,
   Phone,
@@ -37,7 +38,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy-700 text-white relative overflow-hidden">
+    <footer className="bg-charcoal-700 text-white relative overflow-hidden">
       {/* Subtle grid pattern overlay */}
       <div className="absolute inset-0 grid-pattern opacity-30" />
       
@@ -47,14 +48,14 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Brand Column */}
             <div className="lg:col-span-1">
-              <Link href="/" className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-dark flex items-center justify-center">
-                  <span className="text-white font-heading font-bold text-lg">T</span>
+              <Link href="/" className="flex items-center gap-3 mb-6 bg-white/10 p-2 rounded-xl border border-white/5 hover:bg-white/15 transition-colors">
+                <div className="relative w-12 h-12 flex items-center justify-center overflow-hidden rounded-lg bg-white">
+                  <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain" />
                 </div>
                 <div>
                   <span className="font-heading font-bold text-lg text-white">Talent Centre</span>
-                  <span className="block text-[10px] font-medium tracking-[0.2em] uppercase text-white/40">
-                    Consultancy
+                  <span className="block text-[9px] font-medium tracking-[0.1em] uppercase text-white/50">
+                    Training & Management
                   </span>
                 </div>
               </Link>
@@ -67,7 +68,7 @@ export default function Footer() {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-accent-blue/20 hover:border-accent-blue/30 transition-all duration-300"
+                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-accent-red/20 hover:border-accent-red/30 transition-all duration-300"
                 >
                   <Globe className="w-4 h-4" />
                 </a>
@@ -75,7 +76,7 @@ export default function Footer() {
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-accent-blue/20 hover:border-accent-blue/30 transition-all duration-300"
+                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-accent-red/20 hover:border-accent-red/30 transition-all duration-300"
                 >
                   <ExternalLink className="w-4 h-4" />
                 </a>
@@ -133,7 +134,7 @@ export default function Footer() {
                     href="mailto:info@talentcentre.co.za"
                     className="flex items-start gap-3 text-sm text-steel-300 hover:text-white transition-colors duration-300"
                   >
-                    <Mail className="w-4 h-4 mt-0.5 text-accent-blue" />
+                    <Mail className="w-4 h-4 mt-0.5 text-accent-red" />
                     info@talentcentre.co.za
                   </a>
                 </li>
@@ -142,7 +143,7 @@ export default function Footer() {
                     href="tel:+27865511594"
                     className="flex items-start gap-3 text-sm text-steel-300 hover:text-white transition-colors duration-300"
                   >
-                    <Phone className="w-4 h-4 mt-0.5 text-accent-blue" />
+                    <Phone className="w-4 h-4 mt-0.5 text-accent-red" />
                     +27 86 551 1594
                   </a>
                 </li>
@@ -151,12 +152,12 @@ export default function Footer() {
                     href="tel:+26775618647"
                     className="flex items-start gap-3 text-sm text-steel-300 hover:text-white transition-colors duration-300"
                   >
-                    <Phone className="w-4 h-4 mt-0.5 text-accent-blue" />
+                    <Phone className="w-4 h-4 mt-0.5 text-accent-red" />
                     +267 75 618 647
                   </a>
                 </li>
                 <li className="flex items-start gap-3 text-sm text-steel-300">
-                  <MapPin className="w-4 h-4 mt-0.5 text-accent-blue flex-shrink-0" />
+                  <MapPin className="w-4 h-4 mt-0.5 text-accent-red flex-shrink-0" />
                   <span>
                     Plot 104, Unit 15B
                     <br />

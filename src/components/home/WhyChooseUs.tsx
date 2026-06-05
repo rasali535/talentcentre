@@ -49,8 +49,8 @@ export default function WhyChooseUs() {
   return (
     <section className="py-24 lg:py-32 bg-steel-50 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-accent-blue/3 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-gold/3 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-accent-red/3 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-slate/3 rounded-full blur-3xl" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
@@ -82,12 +82,12 @@ export default function WhyChooseUs() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {reasons.map((reason, index) => (
             <AnimatedSection key={reason.title} delay={index * 0.08}>
-              <div className="flex gap-4 p-6 rounded-2xl bg-white border border-steel-100 hover:border-accent-blue/20 hover:shadow-glow-blue transition-all duration-400">
-                <div className="w-12 h-12 rounded-xl bg-accent-blue/10 flex items-center justify-center flex-shrink-0">
-                  <reason.icon className="w-6 h-6 text-accent-blue" />
+              <div className="flex gap-4 p-6 rounded-2xl bg-white border border-steel-100 hover:border-accent-red/20 hover:shadow-glow-blue transition-all duration-400">
+                <div className="w-12 h-12 rounded-xl bg-accent-red/10 flex items-center justify-center flex-shrink-0">
+                  <reason.icon className="w-6 h-6 text-accent-red" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-semibold text-navy-700 mb-1">{reason.title}</h3>
+                  <h3 className="font-heading font-semibold text-charcoal-700 mb-1">{reason.title}</h3>
                   <p className="text-steel-500 text-sm leading-relaxed">{reason.description}</p>
                 </div>
               </div>

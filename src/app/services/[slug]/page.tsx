@@ -24,7 +24,7 @@ const serviceData: Record<string, {
       { step: 'Execution', desc: 'Hands-on support in implementing strategic recommendations' },
       { step: 'Review', desc: 'Ongoing monitoring, measurement, and strategy refinement' },
     ],
-    color: 'text-accent-blue', bg: 'bg-accent-blue/10',
+    color: 'text-accent-red', bg: 'bg-accent-red/10',
   },
   'talent-hr-advisory': {
     icon: Users, title: 'Talent & HR Advisory', tagline: 'Build high-performance teams',
@@ -107,7 +107,7 @@ export default function ServiceDetailPage() {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20">
         <div className="text-center">
-          <h1 className="text-4xl font-heading font-bold text-navy-700 mb-4">Service Not Found</h1>
+          <h1 className="text-4xl font-heading font-bold text-charcoal-700 mb-4">Service Not Found</h1>
           <p className="text-steel-500 mb-8">The service you&apos;re looking for doesn&apos;t exist.</p>
           <Button variant="primary" href="/services">View All Services</Button>
         </div>
@@ -119,7 +119,7 @@ export default function ServiceDetailPage() {
 
   return (
     <>
-      <section className="pt-32 pb-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
@@ -127,7 +127,7 @@ export default function ServiceDetailPage() {
               <ServiceIcon className={`w-8 h-8 ${service.color}`} />
             </div>
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">{service.title}</h1>
-            <p className="text-xl text-accent-gold font-semibold mb-4">{service.tagline}</p>
+            <p className="text-xl text-accent-slate font-semibold mb-4">{service.tagline}</p>
             <p className="text-lg text-steel-300 max-w-2xl">{service.description}</p>
           </AnimatedSection>
         </div>
@@ -138,17 +138,17 @@ export default function ServiceDetailPage() {
           <div className="grid lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
               <AnimatedSection>
-                <h2 className="text-2xl font-heading font-bold text-navy-700 mb-6">Overview</h2>
+                <h2 className="text-2xl font-heading font-bold text-charcoal-700 mb-6">Overview</h2>
                 <p className="text-steel-600 leading-relaxed mb-10">{service.longDescription}</p>
-                <h3 className="text-xl font-heading font-bold text-navy-700 mb-6">Our Process</h3>
+                <h3 className="text-xl font-heading font-bold text-charcoal-700 mb-6">Our Process</h3>
                 <div className="space-y-6 mb-10">
                   {service.process.map((p, i) => (
                     <div key={p.step} className="flex gap-4 items-start">
-                      <div className="w-10 h-10 rounded-full bg-accent-blue/10 flex items-center justify-center flex-shrink-0">
-                        <span className="text-accent-blue font-heading font-bold text-sm">{i + 1}</span>
+                      <div className="w-10 h-10 rounded-full bg-accent-red/10 flex items-center justify-center flex-shrink-0">
+                        <span className="text-accent-red font-heading font-bold text-sm">{i + 1}</span>
                       </div>
                       <div>
-                        <h4 className="font-heading font-semibold text-navy-700">{p.step}</h4>
+                        <h4 className="font-heading font-semibold text-charcoal-700">{p.step}</h4>
                         <p className="text-steel-500 text-sm">{p.desc}</p>
                       </div>
                     </div>
@@ -159,7 +159,7 @@ export default function ServiceDetailPage() {
             <div>
               <AnimatedSection delay={0.15}>
                 <div className="bg-steel-50 rounded-2xl border border-steel-100 p-8 sticky top-28">
-                  <h3 className="font-heading font-bold text-navy-700 mb-6">Key Deliverables</h3>
+                  <h3 className="font-heading font-bold text-charcoal-700 mb-6">Key Deliverables</h3>
                   <div className="space-y-3 mb-8">
                     {service.deliverables.map((d) => (
                       <div key={d} className="flex items-center gap-2">

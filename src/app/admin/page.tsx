@@ -76,7 +76,7 @@ export default function AdminPage() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-4">
@@ -96,7 +96,7 @@ export default function AdminPage() {
                 <label className="block text-sm text-steel-300 mb-1.5">Password</label>
                 <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-steel-500" placeholder="••••••••" />
               </div>
-              <button type="submit" className="w-full px-4 py-3 rounded-xl bg-accent-blue text-white font-semibold hover:bg-accent-blue-dark transition-colors flex items-center justify-center gap-2">
+              <button type="submit" className="w-full px-4 py-3 rounded-xl bg-accent-red text-white font-semibold hover:bg-accent-red-dark transition-colors flex items-center justify-center gap-2">
                 <LogIn className="w-4 h-4" /> Sign In
               </button>
             </div>
@@ -111,7 +111,7 @@ export default function AdminPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-heading font-bold text-navy-700">Lead Dashboard</h1>
+            <h1 className="text-3xl font-heading font-bold text-charcoal-700">Lead Dashboard</h1>
             <p className="text-steel-500 text-sm mt-1">Manage and track all incoming inquiries</p>
           </div>
           <div className="flex gap-3">
@@ -127,7 +127,7 @@ export default function AdminPage() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Total Leads', value: stats.total, icon: Users, color: 'text-accent-blue bg-accent-blue/10' },
+            { label: 'Total Leads', value: stats.total, icon: Users, color: 'text-accent-red bg-accent-red/10' },
             { label: 'Consultations', value: stats.consultation, icon: TrendingUp, color: 'text-emerald-600 bg-emerald-100' },
             { label: 'Inquiries', value: stats.inquiry, icon: MessageSquare, color: 'text-purple-600 bg-purple-100' },
             { label: 'Partnerships', value: stats.partnership, icon: Clock, color: 'text-amber-600 bg-amber-100' },
@@ -138,7 +138,7 @@ export default function AdminPage() {
                   <s.icon className={`w-5 h-5 ${s.color.split(' ')[0]}`} />
                 </div>
               </div>
-              <p className="text-2xl font-heading font-bold text-navy-700">{s.value}</p>
+              <p className="text-2xl font-heading font-bold text-charcoal-700">{s.value}</p>
               <p className="text-steel-500 text-xs mt-1">{s.label}</p>
             </div>
           ))}
@@ -183,7 +183,7 @@ export default function AdminPage() {
                   {filteredLeads.map(lead => (
                     <tr key={lead.id} className="border-b border-steel-50 hover:bg-steel-50/50 transition-colors">
                       <td className="px-6 py-4">
-                        <p className="text-sm font-medium text-navy-700">{lead.fullName}</p>
+                        <p className="text-sm font-medium text-charcoal-700">{lead.fullName}</p>
                         <p className="text-xs text-steel-400">{lead.companyName || 'No company'}</p>
                       </td>
                       <td className="px-6 py-4">

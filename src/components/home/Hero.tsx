@@ -7,20 +7,20 @@ import Button from '@/components/ui/Button';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-navy-700">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-charcoal-700">
       {/* Background layers */}
       <div className="absolute inset-0">
         {/* Gradient base */}
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600" />
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600" />
         
         {/* Grid pattern */}
         <div className="absolute inset-0 grid-pattern opacity-20" />
         
         {/* Radial glow - top right */}
-        <div className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-accent-blue/8 rounded-full blur-3xl" />
+        <div className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-accent-red/8 rounded-full blur-3xl" />
         
         {/* Radial glow - bottom left */}
-        <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-accent-gold/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-accent-slate/5 rounded-full blur-3xl" />
 
         {/* Floating shapes */}
         <motion.div
@@ -31,12 +31,12 @@ export default function Hero() {
         <motion.div
           animate={{ y: [20, -20, 20], rotate: [0, -5, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-1/3 left-1/3 w-14 h-14 border border-accent-blue/10 rounded-full"
+          className="absolute bottom-1/3 left-1/3 w-14 h-14 border border-accent-red/10 rounded-full"
         />
         <motion.div
           animate={{ y: [-15, 15, -15] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/2 right-1/6 w-3 h-3 bg-accent-gold/30 rounded-full"
+          className="absolute top-1/2 right-1/6 w-3 h-3 bg-accent-slate/30 rounded-full"
         />
       </div>
 
@@ -50,7 +50,7 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-medium tracking-wider uppercase mb-8">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent-gold animate-pulse-soft" />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-slate animate-pulse-soft" />
                 Premium Consultancy Services
               </span>
             </motion.div>
@@ -132,8 +132,8 @@ export default function Hero() {
               <div className="absolute inset-8 bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm rounded-3xl border border-white/10 p-8">
                 <div className="h-full flex flex-col justify-between">
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-accent-blue/20 flex items-center justify-center mb-4">
-                      <svg className="w-6 h-6 text-accent-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="w-12 h-12 rounded-xl bg-accent-red/20 flex items-center justify-center mb-4">
+                      <svg className="w-6 h-6 text-accent-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                       </svg>
                     </div>
@@ -149,7 +149,7 @@ export default function Hero() {
                         initial={{ height: 0 }}
                         animate={{ height: `${h}%` }}
                         transition={{ duration: 0.8, delay: 0.8 + i * 0.08 }}
-                        className="flex-1 rounded-t-sm bg-gradient-to-t from-accent-blue/40 to-accent-blue/80"
+                        className="flex-1 rounded-t-sm bg-gradient-to-t from-accent-red/40 to-accent-red/80"
                         style={{ maxHeight: `${h}px` }}
                       />
                     ))}
@@ -163,7 +163,7 @@ export default function Hero() {
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 className="absolute -top-4 -right-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/10 px-5 py-3"
               >
-                <p className="text-accent-gold font-heading font-bold text-xl">+47%</p>
+                <p className="text-accent-slate font-heading font-bold text-xl">+47%</p>
                 <p className="text-white/60 text-xs">Revenue Growth</p>
               </motion.div>
 

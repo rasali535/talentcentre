@@ -22,15 +22,15 @@ export default function Button({
 
   const variants = {
     primary:
-      'bg-accent-blue text-white hover:bg-accent-blue-dark focus:ring-accent-blue shadow-lg shadow-accent-blue/20 hover:shadow-xl hover:shadow-accent-blue/30 hover:-translate-y-0.5',
+      'bg-accent-red text-white hover:bg-accent-red-dark focus:ring-accent-red shadow-lg shadow-accent-red/20 hover:shadow-xl hover:shadow-accent-red/30 hover:-translate-y-0.5',
     secondary:
-      'bg-navy-700 text-white hover:bg-navy-600 focus:ring-navy-500 shadow-lg hover:shadow-xl hover:-translate-y-0.5',
+      'bg-charcoal-700 text-white hover:bg-charcoal-600 focus:ring-charcoal-500 shadow-lg hover:shadow-xl hover:-translate-y-0.5',
     outline:
-      'bg-transparent border-2 border-steel-300 text-steel-700 hover:border-accent-blue hover:text-accent-blue focus:ring-accent-blue',
+      'bg-transparent border-2 border-steel-300 text-steel-700 hover:border-accent-red hover:text-accent-red focus:ring-accent-red',
     ghost:
-      'bg-transparent text-steel-600 hover:bg-steel-100 hover:text-navy-700 focus:ring-steel-300',
+      'bg-transparent text-steel-600 hover:bg-steel-100 hover:text-charcoal-700 focus:ring-steel-300',
     gold:
-      'bg-gradient-to-r from-accent-gold to-accent-gold-dark text-white hover:from-accent-gold-dark hover:to-accent-gold focus:ring-accent-gold shadow-lg shadow-accent-gold/20 hover:shadow-xl hover:-translate-y-0.5',
+      'bg-gradient-to-r from-accent-slate to-accent-slate-dark text-white hover:from-accent-slate-dark hover:to-accent-slate focus:ring-accent-slate shadow-lg shadow-accent-slate/20 hover:shadow-xl hover:-translate-y-0.5',
   };
 
   const sizes = {

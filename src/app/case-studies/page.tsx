@@ -57,7 +57,7 @@ const caseStudies = [
 export default function CaseStudiesPage() {
   return (
     <>
-      <section className="pt-32 pb-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
@@ -77,42 +77,42 @@ export default function CaseStudiesPage() {
               <div className="bg-white rounded-2xl border border-steel-200 overflow-hidden hover:shadow-premium-lg transition-all duration-400">
                 <div className="p-8 md:p-10">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-xl bg-accent-blue/10 flex items-center justify-center">
-                      <cs.icon className="w-5 h-5 text-accent-blue" />
+                    <div className="w-10 h-10 rounded-xl bg-accent-red/10 flex items-center justify-center">
+                      <cs.icon className="w-5 h-5 text-accent-red" />
                     </div>
-                    <span className="px-3 py-1 rounded-full bg-accent-blue/10 text-accent-blue text-xs font-semibold">{cs.category}</span>
+                    <span className="px-3 py-1 rounded-full bg-accent-red/10 text-accent-red text-xs font-semibold">{cs.category}</span>
                     <span className="px-3 py-1 rounded-full bg-steel-100 text-steel-600 text-xs font-medium">{cs.industry}</span>
                   </div>
 
-                  <h2 className="text-2xl font-heading font-bold text-navy-700 mb-2">{cs.title}</h2>
+                  <h2 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">{cs.title}</h2>
                   <p className="text-steel-400 text-sm mb-6">Client: {cs.client}</p>
 
                   <div className="grid md:grid-cols-2 gap-8 mb-8">
                     <div>
-                      <h4 className="font-heading font-semibold text-navy-700 mb-2 text-sm uppercase tracking-wider">Challenge</h4>
+                      <h4 className="font-heading font-semibold text-charcoal-700 mb-2 text-sm uppercase tracking-wider">Challenge</h4>
                       <p className="text-steel-600 text-sm leading-relaxed">{cs.challenge}</p>
                     </div>
                     <div>
-                      <h4 className="font-heading font-semibold text-navy-700 mb-2 text-sm uppercase tracking-wider">Solution</h4>
+                      <h4 className="font-heading font-semibold text-charcoal-700 mb-2 text-sm uppercase tracking-wider">Solution</h4>
                       <p className="text-steel-600 text-sm leading-relaxed">{cs.solution}</p>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-r from-navy-700 to-navy-600 rounded-xl p-6 mb-6">
+                  <div className="bg-gradient-to-r from-charcoal-700 to-charcoal-600 rounded-xl p-6 mb-6">
                     <h4 className="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wider flex items-center gap-2">
-                      <Award className="w-4 h-4 text-accent-gold" /> Results
+                      <Award className="w-4 h-4 text-accent-slate" /> Results
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {cs.results.map((r) => (
                         <div key={r} className="flex items-center gap-2 text-steel-200 text-sm">
-                          <div className="w-1.5 h-1.5 rounded-full bg-accent-gold flex-shrink-0" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-accent-slate flex-shrink-0" />
                           {r}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <blockquote className="border-l-3 border-accent-blue pl-4 italic text-steel-600 text-sm">
+                  <blockquote className="border-l-3 border-accent-red pl-4 italic text-steel-600 text-sm">
                     &ldquo;{cs.testimonial}&rdquo;
                     <span className="block text-steel-400 mt-1 not-italic text-xs">— {cs.client}</span>
                   </blockquote>
@@ -123,7 +123,7 @@ export default function CaseStudiesPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>

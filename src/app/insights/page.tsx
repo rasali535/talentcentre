@@ -41,7 +41,7 @@ const articles = [
 export default function InsightsPage() {
   return (
     <>
-      <section className="pt-32 pb-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
@@ -59,8 +59,8 @@ export default function InsightsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {articles.map((article, idx) => (
               <AnimatedSection key={idx} delay={idx * 0.08}>
-                <article className="bg-white rounded-2xl border border-steel-200 overflow-hidden hover:border-accent-blue/30 hover:shadow-premium-lg transition-all duration-400 group h-full flex flex-col">
-                  <div className="h-48 bg-gradient-to-br from-navy-700 to-navy-600 relative">
+                <article className="bg-white rounded-2xl border border-steel-200 overflow-hidden hover:border-accent-red/30 hover:shadow-premium-lg transition-all duration-400 group h-full flex flex-col">
+                  <div className="h-48 bg-gradient-to-br from-charcoal-700 to-charcoal-600 relative">
                     <div className="absolute inset-0 grid-pattern opacity-20" />
                     <div className="absolute bottom-4 left-4">
                       <span className="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold backdrop-blur-sm">{article.category}</span>
@@ -71,9 +71,9 @@ export default function InsightsPage() {
                       <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{article.readTime}</span>
                       <span className="flex items-center gap-1"><Tag className="w-3 h-3" />{article.date}</span>
                     </div>
-                    <h3 className="text-lg font-heading font-bold text-navy-700 mb-3 group-hover:text-accent-blue transition-colors">{article.title}</h3>
+                    <h3 className="text-lg font-heading font-bold text-charcoal-700 mb-3 group-hover:text-accent-red transition-colors">{article.title}</h3>
                     <p className="text-steel-500 text-sm leading-relaxed flex-1">{article.excerpt}</p>
-                    <div className="flex items-center gap-2 text-accent-blue text-sm font-semibold mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex items-center gap-2 text-accent-red text-sm font-semibold mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
                       Read Article <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -87,7 +87,7 @@ export default function InsightsPage() {
       <section className="py-20 bg-steel-50 border-t border-steel-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h2 className="text-2xl font-heading font-bold text-navy-700 mb-4">Stay Informed</h2>
+            <h2 className="text-2xl font-heading font-bold text-charcoal-700 mb-4">Stay Informed</h2>
             <p className="text-steel-500 mb-6">Subscribe to receive our latest insights and industry perspectives directly in your inbox.</p>
             <form className="flex gap-3 max-w-md mx-auto">
               <input type="email" placeholder="your@email.com" className="flex-1 px-4 py-3 rounded-xl bg-white border border-steel-200 text-sm" />

@@ -118,7 +118,7 @@ export default function ChatWidget() {
             className="fixed bottom-24 right-4 sm:right-6 w-[360px] sm:w-[400px] h-[560px] bg-white rounded-2xl shadow-premium-xl border border-steel-200 flex flex-col overflow-hidden z-50"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-navy-700 to-navy-600 p-4 flex items-center justify-between flex-shrink-0">
+            <div className="bg-gradient-to-r from-charcoal-700 to-charcoal-600 p-4 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
                   <Bot className="w-5 h-5 text-white" />
@@ -141,7 +141,7 @@ export default function ChatWidget() {
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`flex items-start gap-2 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-accent-blue' : 'bg-navy-700'}`}>
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-accent-red' : 'bg-charcoal-700'}`}>
                       {msg.role === 'user' ? <User className="w-3.5 h-3.5 text-white" /> : <Bot className="w-3.5 h-3.5 text-white" />}
                     </div>
                     <div className={`px-4 py-2.5 text-sm leading-relaxed ${msg.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot'}`}>
@@ -154,7 +154,7 @@ export default function ChatWidget() {
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="flex items-start gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-navy-700 flex items-center justify-center">
+                    <div className="w-7 h-7 rounded-lg bg-charcoal-700 flex items-center justify-center">
                       <Bot className="w-3.5 h-3.5 text-white" />
                     </div>
                     <div className="chat-bubble-bot px-4 py-3">
@@ -175,7 +175,7 @@ export default function ChatWidget() {
                     <button
                       key={action.label}
                       onClick={() => sendMessage(action.message)}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-steel-200 text-sm text-steel-700 font-medium hover:border-accent-blue/30 hover:text-accent-blue hover:shadow-sm transition-all duration-200"
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-steel-200 text-sm text-steel-700 font-medium hover:border-accent-red/30 hover:text-accent-red hover:shadow-sm transition-all duration-200"
                     >
                       <action.icon className="w-4 h-4" />
                       {action.label}
@@ -209,13 +209,13 @@ export default function ChatWidget() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Type your message..."
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-steel-50 border border-steel-200 text-sm text-navy-700 placeholder:text-steel-400 focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/10"
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-steel-50 border border-steel-200 text-sm text-charcoal-700 placeholder:text-steel-400 focus:border-accent-red focus:ring-2 focus:ring-accent-red/10"
                   disabled={isTyping}
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || isTyping}
-                  className="p-2.5 rounded-xl bg-accent-blue text-white hover:bg-accent-blue-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                  className="p-2.5 rounded-xl bg-accent-red text-white hover:bg-accent-red-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                 >
                   <Send className="w-4 h-4" />
                 </button>
@@ -229,14 +229,14 @@ export default function ChatWidget() {
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         className={`fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full shadow-premium-xl flex items-center justify-center transition-all duration-300 ${
-          isOpen ? 'bg-steel-700 hover:bg-steel-800' : 'bg-accent-blue hover:bg-accent-blue-dark'
+          isOpen ? 'bg-steel-700 hover:bg-steel-800' : 'bg-accent-red hover:bg-accent-red-dark'
         }`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
         {isOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
         {showPulse && !isOpen && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-accent-gold border-2 border-white animate-pulse-soft" />
+          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-accent-slate border-2 border-white animate-pulse-soft" />
         )}
       </motion.button>
 
@@ -249,7 +249,7 @@ export default function ChatWidget() {
             exit={{ opacity: 0, x: 10 }}
             className="fixed bottom-8 right-22 z-50 bg-white rounded-xl shadow-premium-lg border border-steel-200 px-4 py-3 max-w-[220px]"
           >
-            <p className="text-sm text-navy-700 font-medium">How can we help your business grow today?</p>
+            <p className="text-sm text-charcoal-700 font-medium">How can we help your business grow today?</p>
             <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-2 h-2 bg-white border-r border-b border-steel-200 rotate-[-45deg]" />
           </motion.div>
         )}

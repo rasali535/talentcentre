@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import Button from '@/components/ui/Button';
@@ -58,24 +59,16 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-dark flex items-center justify-center shadow-lg shadow-accent-blue/20 group-hover:shadow-xl group-hover:shadow-accent-blue/30 transition-all duration-300">
-                <span className="text-white font-heading font-bold text-lg">T</span>
+            <Link href="/" className="flex items-center gap-3 group bg-white/90 p-1.5 rounded-xl backdrop-blur-sm border border-white/20 shadow-sm transition-all duration-300">
+              <div className="relative w-12 h-12 flex items-center justify-center overflow-hidden rounded-lg">
+                <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain" />
               </div>
-              <div className="flex flex-col">
-                <span
-                  className={`font-heading font-bold text-lg leading-tight transition-colors duration-300 ${
-                    scrolled ? 'text-navy-700' : 'text-white'
-                  }`}
-                >
+              <div className="flex flex-col pr-2">
+                <span className="font-heading font-bold text-lg leading-tight text-charcoal-800">
                   Talent Centre
                 </span>
-                <span
-                  className={`text-[10px] font-medium tracking-[0.2em] uppercase transition-colors duration-300 ${
-                    scrolled ? 'text-steel-400' : 'text-white/60'
-                  }`}
-                >
-                  Consultancy
+                <span className="text-[9px] font-medium tracking-[0.1em] uppercase text-charcoal-500">
+                  Training & Management
                 </span>
               </div>
             </Link>
@@ -93,7 +86,7 @@ export default function Navbar() {
                     href={link.href}
                     className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                       scrolled
-                        ? 'text-steel-600 hover:text-navy-700 hover:bg-steel-50'
+                        ? 'text-steel-600 hover:text-charcoal-700 hover:bg-steel-50'
                         : 'text-white/80 hover:text-white hover:bg-white/10'
                     }`}
                   >
@@ -115,7 +108,7 @@ export default function Navbar() {
                           <Link
                             key={child.label}
                             href={child.href}
-                            className="block px-4 py-2.5 text-sm text-steel-600 hover:text-accent-blue hover:bg-accent-blue/5 transition-colors duration-200"
+                            className="block px-4 py-2.5 text-sm text-steel-600 hover:text-accent-red hover:bg-accent-red/5 transition-colors duration-200"
                           >
                             {child.label}
                           </Link>
@@ -132,7 +125,7 @@ export default function Navbar() {
               <a
                 href={`tel:${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+26775618647'}`}
                 className={`flex items-center gap-2 text-sm font-medium transition-colors duration-300 ${
-                  scrolled ? 'text-steel-500 hover:text-navy-700' : 'text-white/70 hover:text-white'
+                  scrolled ? 'text-steel-500 hover:text-charcoal-700' : 'text-white/70 hover:text-white'
                 }`}
               >
                 <Phone className="w-4 h-4" />
@@ -147,7 +140,7 @@ export default function Navbar() {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
-                scrolled ? 'text-navy-700 hover:bg-steel-100' : 'text-white hover:bg-white/10'
+                scrolled ? 'text-charcoal-700 hover:bg-steel-100' : 'text-white hover:bg-white/10'
               }`}
               aria-label="Toggle menu"
             >
@@ -167,7 +160,7 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 lg:hidden"
           >
-            <div className="absolute inset-0 bg-navy-900/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+            <div className="absolute inset-0 bg-charcoal-900/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -176,7 +169,7 @@ export default function Navbar() {
               className="absolute right-0 top-0 bottom-0 w-80 bg-white shadow-premium-xl"
             >
               <div className="flex items-center justify-between p-6 border-b border-steel-100">
-                <span className="font-heading font-bold text-navy-700">Menu</span>
+                <span className="font-heading font-bold text-charcoal-700">Menu</span>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="p-2 rounded-lg text-steel-500 hover:bg-steel-100"
@@ -190,7 +183,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className="block px-4 py-3 text-steel-700 font-medium hover:text-accent-blue hover:bg-accent-blue/5 rounded-lg transition-colors duration-200"
+                      className="block px-4 py-3 text-steel-700 font-medium hover:text-accent-red hover:bg-accent-red/5 rounded-lg transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -201,7 +194,7 @@ export default function Navbar() {
                             key={child.label}
                             href={child.href}
                             onClick={() => setMobileOpen(false)}
-                            className="block px-4 py-2 text-sm text-steel-500 hover:text-accent-blue transition-colors duration-200"
+                            className="block px-4 py-2 text-sm text-steel-500 hover:text-accent-red transition-colors duration-200"
                           >
                             {child.label}
                           </Link>

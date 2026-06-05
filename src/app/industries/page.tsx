@@ -44,7 +44,7 @@ const industries = [
 export default function IndustriesPage() {
   return (
     <>
-      <section className="pt-32 pb-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
@@ -67,15 +67,15 @@ export default function IndustriesPage() {
                     <div className={`w-14 h-14 rounded-2xl ${ind.color.split(' ')[0]} flex items-center justify-center mb-4`}>
                       <ind.icon className={`w-7 h-7 ${ind.color.split(' ')[1]}`} />
                     </div>
-                    <h2 className="text-2xl font-heading font-bold text-navy-700 mb-3">{ind.title}</h2>
+                    <h2 className="text-2xl font-heading font-bold text-charcoal-700 mb-3">{ind.title}</h2>
                     <p className="text-steel-600 leading-relaxed">{ind.description}</p>
                   </div>
                   <div className="bg-steel-50 rounded-xl p-6 border border-steel-100">
-                    <h4 className="font-heading font-semibold text-navy-700 mb-4 text-sm">Key Services</h4>
+                    <h4 className="font-heading font-semibold text-charcoal-700 mb-4 text-sm">Key Services</h4>
                     <div className="space-y-2">
                       {ind.services.map((s) => (
                         <div key={s} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-accent-blue flex-shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-accent-red flex-shrink-0" />
                           <span className="text-steel-600 text-sm">{s}</span>
                         </div>
                       ))}
@@ -88,7 +88,7 @@ export default function IndustriesPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-br from-navy-800 via-navy-700 to-navy-600 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>

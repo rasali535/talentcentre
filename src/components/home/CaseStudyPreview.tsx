@@ -54,20 +54,20 @@ export default function CaseStudyPreview() {
           {caseStudies.map((study, index) => (
             <AnimatedSection key={study.title} delay={index * 0.15}>
               <a href={study.href} className="group block h-full">
-                <div className="h-full bg-white rounded-2xl border border-steel-200 overflow-hidden hover:border-accent-blue/30 hover:shadow-premium-lg transition-all duration-400 flex flex-col">
+                <div className="h-full bg-white rounded-2xl border border-steel-200 overflow-hidden hover:border-accent-red/30 hover:shadow-premium-lg transition-all duration-400 flex flex-col">
                   {/* Header */}
                   <div className="p-6 pb-0">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="px-3 py-1 rounded-full bg-accent-blue/10 text-accent-blue text-xs font-semibold">
+                      <span className="px-3 py-1 rounded-full bg-accent-red/10 text-accent-red text-xs font-semibold">
                         {study.category}
                       </span>
-                      <ArrowUpRight className="w-5 h-5 text-steel-300 group-hover:text-accent-blue transition-colors duration-300" />
+                      <ArrowUpRight className="w-5 h-5 text-steel-300 group-hover:text-accent-red transition-colors duration-300" />
                     </div>
                   </div>
 
                   {/* Content */}
                   <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-lg font-heading font-bold text-navy-700 mb-3 group-hover:text-accent-blue transition-colors duration-300">
+                    <h3 className="text-lg font-heading font-bold text-charcoal-700 mb-3 group-hover:text-accent-red transition-colors duration-300">
                       {study.title}
                     </h3>
                     <p className="text-steel-500 text-sm leading-relaxed mb-6 flex-1">
@@ -75,10 +75,10 @@ export default function CaseStudyPreview() {
                     </p>
 
                     {/* Result highlight */}
-                    <div className="bg-gradient-to-r from-navy-700 to-navy-600 rounded-xl p-4 mb-4">
+                    <div className="bg-gradient-to-r from-charcoal-700 to-charcoal-600 rounded-xl p-4 mb-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                          <study.icon className="w-5 h-5 text-accent-gold" />
+                          <study.icon className="w-5 h-5 text-accent-slate" />
                         </div>
                         <div>
                           <p className="text-white font-heading font-bold text-lg">{study.result}</p>
@@ -109,7 +109,7 @@ export default function CaseStudyPreview() {
           <div className="text-center mt-12">
             <a
               href="/case-studies"
-              className="inline-flex items-center gap-2 text-accent-blue font-semibold hover:gap-3 transition-all duration-300"
+              className="inline-flex items-center gap-2 text-accent-red font-semibold hover:gap-3 transition-all duration-300"
             >
               View All Case Studies
               <ArrowUpRight className="w-4 h-4" />

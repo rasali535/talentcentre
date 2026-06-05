@@ -22,7 +22,7 @@ export default function SectionHeading({
           className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-4 ${
             light
               ? 'bg-white/10 text-white/80 border border-white/10'
-              : 'bg-accent-blue/10 text-accent-blue border border-accent-blue/20'
+              : 'bg-accent-red/10 text-accent-red border border-accent-red/20'
           }`}
         >
           {badge}
@@ -30,7 +30,7 @@ export default function SectionHeading({
       )}
       <h2
         className={`text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 ${
-          light ? 'text-white' : 'text-navy-700'
+          light ? 'text-white' : 'text-charcoal-700'
         }`}
       >
         {title}
