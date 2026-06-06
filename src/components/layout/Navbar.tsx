@@ -59,7 +59,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center group bg-white/90 p-1.5 rounded-xl backdrop-blur-sm border border-white/20 shadow-sm transition-all duration-300">
+            <Link href="/" className="flex items-center group transition-all duration-300">
               <div className="relative w-14 h-14 flex items-center justify-center overflow-hidden rounded-lg">
                 <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain" />
               </div>

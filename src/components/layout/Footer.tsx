@@ -33,7 +33,7 @@ export default function Footer() {
             
             {/* Left: Logo & Socials */}
             <div className="flex flex-col items-center lg:items-start gap-4">
-              <Link href="/" className="inline-block bg-white/90 p-1.5 rounded-xl border border-white/20 shadow-sm transition-all duration-300 hover:shadow-md">
+              <Link href="/" className="inline-block transition-all duration-300 hover:opacity-80">
                 <div className="relative w-14 h-14 flex items-center justify-center overflow-hidden rounded-lg">
                   <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain" />
                 </div>
