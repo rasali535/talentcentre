@@ -86,20 +86,20 @@ export default function AboutPage() {
           <AnimatedSection>
             <SectionHeading badge="Leadership" title="Meet Our Leadership Team" />
           </AnimatedSection>
-          
+
           <div className="grid md:grid-cols-2 gap-8 mt-12">
             <AnimatedSection delay={0.1}>
               <div className="h-full bg-white rounded-3xl border border-steel-200 p-8 md:p-10 text-center shadow-premium">
                 <div className="relative w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-premium overflow-hidden">
-                  <Image 
-                    src="/humphrey.png" 
-                    alt="Humphrey Chawafambira" 
-                    fill 
+                  <Image
+                    src="/humphrey.png"
+                    alt="Humphrey Chawafambira"
+                    fill
                     className="object-cover object-top"
                   />
                 </div>
                 <h3 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">Humphrey Chawafambira</h3>
-                <p className="text-accent-red font-semibold mb-4">Principal Consultant & Founder</p>
+                <p className="text-accent-red font-semibold mb-4">Business Development Consultant & Founder</p>
                 <p className="text-steel-600 leading-relaxed mb-6">
                   With over 15 years of experience in business development, organizational consulting, and strategic advisory, Humphrey has guided hundreds of organizations across Southern Africa toward sustainable growth. His expertise spans government, corporate, SME, and NGO sectors, with a proven track record of delivering transformative outcomes.
                 </p>
@@ -114,10 +114,10 @@ export default function AboutPage() {
             <AnimatedSection delay={0.2}>
               <div className="h-full bg-white rounded-3xl border border-steel-200 p-8 md:p-10 text-center shadow-premium flex flex-col">
                 <div className="relative w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-premium overflow-hidden">
-                  <Image 
-                    src="/tafadzwa.png" 
-                    alt="Tafadzwa Chawafambira" 
-                    fill 
+                  <Image
+                    src="/tafadzwa.png"
+                    alt="Tafadzwa Chawafambira"
+                    fill
                     className="object-cover object-top"
                   />
                 </div>
