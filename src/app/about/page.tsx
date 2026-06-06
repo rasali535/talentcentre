@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Award, Users, Globe, Target, CheckCircle2, ArrowRight } from 'lucide-react';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -79,29 +80,60 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Principal */}
+      {/* Leadership Team */}
       <section className="py-24 bg-steel-50" id="team">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <SectionHeading badge="Leadership" title="Meet Our Principal Consultant" />
+            <SectionHeading badge="Leadership" title="Meet Our Leadership Team" />
           </AnimatedSection>
-          <AnimatedSection delay={0.1}>
-            <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-steel-200 p-8 md:p-12 text-center shadow-premium">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent-red to-accent-red-dark mx-auto mb-6 flex items-center justify-center">
-                <span className="text-white font-heading font-bold text-3xl">HC</span>
+          
+          <div className="grid md:grid-cols-2 gap-8 mt-12">
+            <AnimatedSection delay={0.1}>
+              <div className="h-full bg-white rounded-3xl border border-steel-200 p-8 md:p-10 text-center shadow-premium">
+                <div className="relative w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-premium overflow-hidden">
+                  <Image 
+                    src="/humphrey.png" 
+                    alt="Humphrey Chawafambira" 
+                    fill 
+                    className="object-cover object-top"
+                  />
+                </div>
+                <h3 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">Humphrey Chawafambira</h3>
+                <p className="text-accent-red font-semibold mb-4">Principal Consultant & Founder</p>
+                <p className="text-steel-600 leading-relaxed mb-6">
+                  With over 15 years of experience in business development, organizational consulting, and strategic advisory, Humphrey has guided hundreds of organizations across Southern Africa toward sustainable growth. His expertise spans government, corporate, SME, and NGO sectors, with a proven track record of delivering transformative outcomes.
+                </p>
+                <div className="flex flex-wrap justify-center gap-2 mt-auto">
+                  {['Strategic Planning', 'Business Development', 'Organizational Change', 'Executive Coaching'].map((s) => (
+                    <span key={s} className="px-3 py-1 rounded-full bg-accent-red/10 text-accent-red text-xs font-semibold">{s}</span>
+                  ))}
+                </div>
               </div>
-              <h3 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">Humphrey Chawafambira</h3>
-              <p className="text-accent-red font-semibold mb-4">Principal Consultant & Founder</p>
-              <p className="text-steel-600 leading-relaxed mb-6">
-                With over 15 years of experience in business development, organizational consulting, and strategic advisory, Humphrey has guided hundreds of organizations across Southern Africa toward sustainable growth. His expertise spans government, corporate, SME, and NGO sectors, with a proven track record of delivering transformative outcomes.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                {['Strategic Planning', 'Business Development', 'Organizational Change', 'Executive Coaching'].map((s) => (
-                  <span key={s} className="px-3 py-1 rounded-full bg-accent-red/10 text-accent-red text-xs font-semibold">{s}</span>
-                ))}
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.2}>
+              <div className="h-full bg-white rounded-3xl border border-steel-200 p-8 md:p-10 text-center shadow-premium flex flex-col">
+                <div className="relative w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-premium overflow-hidden">
+                  <Image 
+                    src="/tafadzwa.png" 
+                    alt="Tafadzwa Chawafambira" 
+                    fill 
+                    className="object-cover object-top"
+                  />
+                </div>
+                <h3 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">Tafadzwa Chawafambira</h3>
+                <p className="text-accent-red font-semibold mb-4">Financial Consultant</p>
+                <p className="text-steel-600 leading-relaxed mb-6">
+                  Tafadzwa brings extensive expertise in corporate finance, financial planning, and risk management. She partners with organizations to optimize their financial strategies, ensuring sustainable growth, robust financial health, and operational efficiency across both SME and corporate sectors.
+                </p>
+                <div className="flex flex-wrap justify-center gap-2 mt-auto">
+                  {['Corporate Finance', 'Financial Planning', 'Risk Management', 'Operational Efficiency'].map((s) => (
+                    <span key={s} className="px-3 py-1 rounded-full bg-accent-red/10 text-accent-red text-xs font-semibold">{s}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-          </AnimatedSection>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
