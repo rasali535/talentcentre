@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Sparkles, Phone, Calendar, Briefcase } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Sparkles, Phone, Calendar, Briefcase, ArrowRight } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -24,6 +24,11 @@ export default function ChatWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const [hasGreeted, setHasGreeted] = useState(false);
   const [showPulse, setShowPulse] = useState(true);
+  
+  // Lead Collection State
+  const [hasCollectedLeadInfo, setHasCollectedLeadInfo] = useState(false);
+  const [leadInfo, setLeadInfo] = useState({ name: '', email: '', phone: '' });
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -34,7 +39,7 @@ export default function ChatWidget() {
   useEffect(() => { scrollToBottom(); }, [messages]);
 
   useEffect(() => {
-    if (isOpen && !hasGreeted) {
+    if (isOpen && !hasGreeted && hasCollectedLeadInfo) {
       // eslint-disable-next-line
       setHasGreeted(true);
       setShowPulse(false);
@@ -42,17 +47,23 @@ export default function ChatWidget() {
         setMessages([{
           id: '1',
           role: 'assistant',
-          content: "Welcome to Talent Centre. I'm your dedicated business consultant. How can we help your business grow today?",
+          content: `Welcome ${leadInfo.name}! I'm your dedicated business consultant. How can we help your business grow today?`,
           timestamp: new Date(),
         }]);
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, hasGreeted]);
+  }, [isOpen, hasGreeted, hasCollectedLeadInfo, leadInfo.name]);
 
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
-  }, [isOpen]);
+    if (isOpen && hasCollectedLeadInfo) inputRef.current?.focus();
+  }, [isOpen, hasCollectedLeadInfo]);
+
+  const handleLeadSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!leadInfo.name || !leadInfo.email) return;
+    setHasCollectedLeadInfo(true);
+  };
 
   const sendMessage = useCallback(async (text: string) => {
     if (!text.trim()) return;
@@ -75,6 +86,7 @@ export default function ChatWidget() {
         body: JSON.stringify({
           message: text,
           history: messages.map(m => ({ role: m.role, content: m.content })),
+          leadInfo: leadInfo,
         }),
       });
 
@@ -98,7 +110,7 @@ export default function ChatWidget() {
     } finally {
       setIsTyping(false);
     }
-  }, [messages]);
+  }, [messages, leadInfo]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,91 +148,151 @@ export default function ChatWidget() {
               </button>
             </div>
 
-            {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-steel-50/50">
-              {messages.map((msg) => (
-                <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`flex items-start gap-2 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-accent-red' : 'bg-charcoal-700'}`}>
-                      {msg.role === 'user' ? <User className="w-3.5 h-3.5 text-white" /> : <Bot className="w-3.5 h-3.5 text-white" />}
-                    </div>
-                    <div className={`px-4 py-2.5 text-sm leading-relaxed ${msg.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot'}`}>
-                      {msg.content}
-                    </div>
+            {!hasCollectedLeadInfo ? (
+              /* Lead Collection Form */
+              <div className="flex-1 flex flex-col items-center justify-center p-6 bg-steel-50/50">
+                <div className="w-full max-w-sm space-y-6">
+                  <div className="text-center space-y-2">
+                    <h4 className="text-lg font-heading font-semibold text-charcoal-700">Let's get started</h4>
+                    <p className="text-sm text-steel-500">Please provide your details so we can better assist you and follow up if we get disconnected.</p>
                   </div>
-                </div>
-              ))}
-
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="flex items-start gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-charcoal-700 flex items-center justify-center">
-                      <Bot className="w-3.5 h-3.5 text-white" />
+                  
+                  <form onSubmit={handleLeadSubmit} className="space-y-4">
+                    <div className="space-y-1">
+                      <label htmlFor="name" className="text-xs font-medium text-charcoal-600 ml-1">Full Name *</label>
+                      <input
+                        id="name"
+                        type="text"
+                        required
+                        value={leadInfo.name}
+                        onChange={(e) => setLeadInfo(prev => ({ ...prev, name: e.target.value }))}
+                        className="w-full px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-sm focus:border-accent-red focus:ring-2 focus:ring-accent-red/10 transition-all"
+                        placeholder="John Doe"
+                      />
                     </div>
-                    <div className="chat-bubble-bot px-4 py-3">
-                      <div className="flex gap-1">
-                        <span className="w-2 h-2 rounded-full bg-steel-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <span className="w-2 h-2 rounded-full bg-steel-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <span className="w-2 h-2 rounded-full bg-steel-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <div className="space-y-1">
+                      <label htmlFor="email" className="text-xs font-medium text-charcoal-600 ml-1">Email Address *</label>
+                      <input
+                        id="email"
+                        type="email"
+                        required
+                        value={leadInfo.email}
+                        onChange={(e) => setLeadInfo(prev => ({ ...prev, email: e.target.value }))}
+                        className="w-full px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-sm focus:border-accent-red focus:ring-2 focus:ring-accent-red/10 transition-all"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label htmlFor="phone" className="text-xs font-medium text-charcoal-600 ml-1">Phone Number (Optional)</label>
+                      <input
+                        id="phone"
+                        type="tel"
+                        value={leadInfo.phone}
+                        onChange={(e) => setLeadInfo(prev => ({ ...prev, phone: e.target.value }))}
+                        className="w-full px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-sm focus:border-accent-red focus:ring-2 focus:ring-accent-red/10 transition-all"
+                        placeholder="+267 ..."
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={!leadInfo.name || !leadInfo.email}
+                      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-accent-red text-white font-medium hover:bg-accent-red-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 mt-2"
+                    >
+                      Start Chat <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </form>
+                </div>
+              </div>
+            ) : (
+              /* Chat Interface */
+              <>
+                {/* Messages Area */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-steel-50/50">
+                  {messages.map((msg) => (
+                    <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`flex items-start gap-2 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-accent-red' : 'bg-charcoal-700'}`}>
+                          {msg.role === 'user' ? <User className="w-3.5 h-3.5 text-white" /> : <Bot className="w-3.5 h-3.5 text-white" />}
+                        </div>
+                        <div className={`px-4 py-2.5 text-sm leading-relaxed ${msg.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot'}`}>
+                          {msg.content}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Quick Actions (shown when no user messages yet) */}
-              {messages.length <= 1 && !isTyping && (
-                <div className="space-y-2 pt-2">
-                  {quickActions.map((action) => (
-                    <button
-                      key={action.label}
-                      onClick={() => sendMessage(action.message)}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-steel-200 text-sm text-steel-700 font-medium hover:border-accent-red/30 hover:text-accent-red hover:shadow-sm transition-all duration-200"
-                    >
-                      <action.icon className="w-4 h-4" />
-                      {action.label}
-                    </button>
                   ))}
+
+                  {isTyping && (
+                    <div className="flex justify-start">
+                      <div className="flex items-start gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-charcoal-700 flex items-center justify-center">
+                          <Bot className="w-3.5 h-3.5 text-white" />
+                        </div>
+                        <div className="chat-bubble-bot px-4 py-3">
+                          <div className="flex gap-1">
+                            <span className="w-2 h-2 rounded-full bg-steel-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                            <span className="w-2 h-2 rounded-full bg-steel-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                            <span className="w-2 h-2 rounded-full bg-steel-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Quick Actions (shown when no user messages yet) */}
+                  {messages.length <= 1 && !isTyping && (
+                    <div className="space-y-2 pt-2">
+                      {quickActions.map((action) => (
+                        <button
+                          key={action.label}
+                          onClick={() => sendMessage(action.message)}
+                          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-steel-200 text-sm text-steel-700 font-medium hover:border-accent-red/30 hover:text-accent-red hover:shadow-sm transition-all duration-200"
+                        >
+                          <action.icon className="w-4 h-4" />
+                          {action.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  <div ref={messagesEndRef} />
                 </div>
-              )}
 
-              <div ref={messagesEndRef} />
-            </div>
+                {/* WhatsApp fallback */}
+                <div className="px-4 py-2 bg-white border-t border-steel-100 flex-shrink-0">
+                  <a
+                    href="https://wa.me/26775618647"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 text-xs text-green-700 font-medium hover:text-green-800 transition-colors"
+                  >
+                    <Phone className="w-3 h-3" />
+                    Prefer WhatsApp? Chat with us directly
+                  </a>
+                </div>
 
-            {/* WhatsApp fallback */}
-            <div className="px-4 py-2 bg-white border-t border-steel-100 flex-shrink-0">
-              <a
-                href="https://wa.me/26775618647"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 text-xs text-green-700 font-medium hover:text-green-800 transition-colors"
-              >
-                <Phone className="w-3 h-3" />
-                Prefer WhatsApp? Chat with us directly
-              </a>
-            </div>
-
-            {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-3 bg-white border-t border-steel-100 flex-shrink-0">
-              <div className="flex items-center gap-2">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your message..."
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-steel-50 border border-steel-200 text-sm text-charcoal-700 placeholder:text-steel-400 focus:border-accent-red focus:ring-2 focus:ring-accent-red/10"
-                  disabled={isTyping}
-                />
-                <button
-                  type="submit"
-                  disabled={!input.trim() || isTyping}
-                  className="p-2.5 rounded-xl bg-accent-red text-white hover:bg-accent-red-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
-              </div>
-            </form>
+                {/* Input Area */}
+                <form onSubmit={handleSubmit} className="p-3 bg-white border-t border-steel-100 flex-shrink-0">
+                  <div className="flex items-center gap-2">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      placeholder="Type your message..."
+                      className="flex-1 px-4 py-2.5 rounded-xl bg-steel-50 border border-steel-200 text-sm text-charcoal-700 placeholder:text-steel-400 focus:border-accent-red focus:ring-2 focus:ring-accent-red/10"
+                      disabled={isTyping}
+                    />
+                    <button
+                      type="submit"
+                      disabled={!input.trim() || isTyping}
+                      className="p-2.5 rounded-xl bg-accent-red text-white hover:bg-accent-red-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                      <Send className="w-4 h-4" />
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -257,3 +329,4 @@ export default function ChatWidget() {
     </>
   );
 }
+
