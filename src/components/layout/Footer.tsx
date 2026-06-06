@@ -5,6 +5,7 @@ import {
   Mail,
   Phone,
   Globe,
+  Facebook,
   ExternalLink,
 } from 'lucide-react';
 
@@ -34,7 +35,7 @@ export default function Footer() {
             {/* Left: Logo & Socials */}
             <div className="flex flex-col items-center lg:items-start gap-4">
               <Link href="/" className="inline-block bg-white/90 p-1.5 rounded-xl border border-white/20 shadow-sm transition-all duration-300 hover:shadow-md">
-                <div className="relative w-32 h-14 flex items-center justify-center overflow-hidden rounded-lg">
+                <div className="relative w-14 h-14 flex items-center justify-center overflow-hidden rounded-lg">
                   <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain" />
                 </div>
               </Link>
@@ -46,6 +47,15 @@ export default function Footer() {
                   className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-accent-red/20 transition-all duration-300"
                 >
                   <Globe className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://github.com/rasali535/talentcentre"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 hover:text-blue-300 transition-all duration-300"
+                  title="Facebook"
+                >
+                  <Facebook className="w-4 h-4" />
                 </a>
                 <a
                   href={`https://wa.me/${(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+26775618647').replace(/[^0-9]/g, '')}`}
