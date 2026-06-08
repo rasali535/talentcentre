@@ -42,3 +42,66 @@ model AdminUser {
 
   @@map("admin_users")
 }
+
+model Blog {
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  content        String    @db.Text
+  excerpt        String?   @db.Text
+  featuredImage  String?   @map("featured_image")
+  author         String
+  status         String    @default("draft") // draft, published, scheduled
+  categoryId     String?   @map("category_id")
+  category       Category? @relation(fields: [categoryId], references: [id])
+  tags           String[]  @default([])
+  seoTitle       String?   @map("seo_title")
+  seoDescription String?   @db.Text @map("seo_description")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  publishedAt    DateTime? @map("published_at")
+
+  @@map("blogs")
+}
+
+model VideoBlog {
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  description    String?   @db.Text
+  videoUrl       String    @map("video_url") // YouTube url or internal upload url
+  thumbnail      String?
+  categoryId     String?   @map("category_id")
+  category       Category? @relation(fields: [categoryId], references: [id])
+  tags           String[]  @default([])
+  seoTitle       String?   @map("seo_title")
+  seoDescription String?   @db.Text @map("seo_description")
+  status         String    @default("draft") // draft, published, scheduled
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  publishedAt    DateTime? @map("published_at")
+
+  @@map("video_blogs")
+}
+
+model Category {
+  id         String      @id @default(cuid())
+  name       String      @unique
+  slug       String      @unique
+  blogs      Blog[]
+  videoBlogs VideoBlog[]
+  createdAt  DateTime    @default(now()) @map("created_at")
+  updatedAt  DateTime    @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+
+model MediaAsset {
+  id         String   @id @default(cuid())
+  filename   String
+  type       String   // image, video, document
+  url        String   @unique
+  uploadedAt DateTime @default(now()) @map("uploaded_at")
+
+  @@map("media_assets")
+}
