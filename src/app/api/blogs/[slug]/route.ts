@@ -3,9 +3,10 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function GET(req: Request, { params }: { params: { slug: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const blog = await prisma.blog.findUnique({ where: { slug: params.slug } });
+    const slug = (await params).slug;
+    const blog = await prisma.blog.findUnique({ where: { slug } });
     if (!blog) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     return NextResponse.json(blog);
   } catch (error) {
@@ -13,11 +14,12 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
   }
 }
 
-export async function PUT(req: Request, { params }: { params: { slug: string } }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
+    const slug = (await params).slug;
     const body = await req.json();
     const blog = await prisma.blog.update({
-      where: { slug: params.slug },
+      where: { slug },
       data: body,
     });
     return NextResponse.json(blog);
@@ -26,9 +28,10 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { slug: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    await prisma.blog.delete({ where: { slug: params.slug } });
+    const slug = (await params).slug;
+    await prisma.blog.delete({ where: { slug } });
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });

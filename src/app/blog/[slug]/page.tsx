@@ -10,9 +10,10 @@ const prisma = new PrismaClient();
 
 export const revalidate = 60;
 
-export default async function SingleBlogPage({ params }: { params: { slug: string } }) {
+export default async function SingleBlogPage({ params }: { params: Promise<{ slug: string }> }) {
+  const slug = (await params).slug;
   const blog = await prisma.blog.findUnique({
-    where: { slug: params.slug }
+    where: { slug }
   });
 
   if (!blog || blog.status !== 'published') {
