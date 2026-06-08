@@ -25,8 +25,33 @@ export default function CreateVideoBlogPage() {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
   const [recordedUrl, setRecordedUrl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   if (!isAuthenticated) return null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    const slug = formData.slug || formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    
+    try {
+      const res = await fetch('/api/video-blogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, slug })
+      });
+      if (res.ok) {
+        router.push('/admin/blogs');
+      } else {
+        alert('Failed to save video blog.');
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const startCamera = async () => {
     try {
@@ -68,11 +93,15 @@ export default function CreateVideoBlogPage() {
       <div className="max-w-5xl mx-auto px-4">
         <h1 className="text-3xl font-heading font-bold text-charcoal-700 mb-8">Create Video Blog</h1>
         
-        <div className="grid md:grid-cols-2 gap-8">
+        <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8">
           <div className="bg-white p-6 rounded-2xl border border-steel-200 shadow-sm space-y-4 h-fit">
             <div>
               <label className="block text-sm font-medium text-steel-700 mb-1">Title</label>
-              <input value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full p-3 border border-steel-200 rounded-xl" placeholder="Video title..." />
+              <input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full p-3 border border-steel-200 rounded-xl" placeholder="Video title..." />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-steel-700 mb-1">URL Slug (Optional)</label>
+              <input value={formData.slug} onChange={e => setFormData({...formData, slug: e.target.value})} className="w-full p-3 border border-steel-200 rounded-xl" placeholder="auto-generated-if-empty" />
             </div>
             <div>
               <label className="block text-sm font-medium text-steel-700 mb-1">Description</label>
@@ -80,9 +109,18 @@ export default function CreateVideoBlogPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-steel-700 mb-1">YouTube URL or Storage URL</label>
-              <input value={formData.videoUrl} onChange={e => setFormData({...formData, videoUrl: e.target.value})} className="w-full p-3 border border-steel-200 rounded-xl" placeholder="https://youtube.com/watch?v=..." />
+              <input required value={formData.videoUrl} onChange={e => setFormData({...formData, videoUrl: e.target.value})} className="w-full p-3 border border-steel-200 rounded-xl" placeholder="https://youtube.com/watch?v=..." />
             </div>
-            <button className="w-full py-3 bg-accent-red text-white rounded-xl font-semibold mt-4">Save Video Blog</button>
+            <div>
+              <label className="block text-sm font-medium text-steel-700 mb-1">Status</label>
+              <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full p-3 border border-steel-200 rounded-xl">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+              </select>
+            </div>
+            <button type="submit" disabled={loading} className="w-full py-3 bg-accent-red text-white rounded-xl font-semibold mt-4 disabled:opacity-50">
+              {loading ? 'Saving...' : 'Save Video Blog'}
+            </button>
           </div>
 
           <div className="bg-white p-6 rounded-2xl border border-steel-200 shadow-sm">
@@ -101,7 +139,7 @@ export default function CreateVideoBlogPage() {
               </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

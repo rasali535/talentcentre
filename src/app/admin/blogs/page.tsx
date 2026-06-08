@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 export default function AdminBlogsPage() {
   const router = useRouter();
-  const [blogs, setBlogs] = useState<any[]>([]);
+  const [contentList, setContentList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -16,24 +16,29 @@ export default function AdminBlogsPage() {
       router.push('/admin');
     } else {
       setIsAuthenticated(true);
-      fetch('/api/blogs')
-        .then(res => res.json())
-        .then(data => {
-          setBlogs(data.blogs || []);
-          setLoading(false);
-        }).catch(err => {
-          console.error(err);
-          setLoading(false);
-        });
+      Promise.all([
+        fetch('/api/blogs').then(res => res.json()),
+        fetch('/api/video-blogs').then(res => res.json())
+      ]).then(([blogsData, videoData]) => {
+        const textBlogs = (blogsData.blogs || []).map((b: any) => ({ ...b, contentType: 'Article' }));
+        const videoBlogs = (videoData.videoBlogs || []).map((v: any) => ({ ...v, contentType: 'Video' }));
+        const combined = [...textBlogs, ...videoBlogs].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        setContentList(combined);
+        setLoading(false);
+      }).catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
     }
   }, [router]);
 
   if (!isAuthenticated) return null;
 
-  const deleteBlog = async (slug: string) => {
-    if (!confirm('Are you sure you want to delete this blog?')) return;
-    await fetch(`/api/blogs/${slug}`, { method: 'DELETE' });
-    setBlogs(blogs.filter(b => b.slug !== slug));
+  const deleteContent = async (slug: string, contentType: string) => {
+    if (!confirm(`Are you sure you want to delete this ${contentType}?`)) return;
+    const endpoint = contentType === 'Video' ? `/api/video-blogs/${slug}` : `/api/blogs/${slug}`;
+    await fetch(endpoint, { method: 'DELETE' });
+    setContentList(contentList.filter(item => item.slug !== slug));
   };
 
   return (
@@ -57,7 +62,7 @@ export default function AdminBlogsPage() {
         <div className="bg-white rounded-2xl border border-steel-200 overflow-hidden">
           {loading ? (
             <div className="p-8 text-center text-steel-500">Loading content...</div>
-          ) : blogs.length === 0 ? (
+          ) : contentList.length === 0 ? (
             <div className="p-16 text-center">
               <p className="text-steel-500 font-medium">No articles found</p>
               <p className="text-steel-400 text-sm mt-1">Create your first thought leadership piece.</p>
@@ -67,26 +72,26 @@ export default function AdminBlogsPage() {
               <thead>
                 <tr className="bg-steel-50 border-b border-steel-100">
                   <th className="p-4 font-semibold text-steel-600">Title</th>
-                  <th className="p-4 font-semibold text-steel-600">Author</th>
+                  <th className="p-4 font-semibold text-steel-600">Type</th>
                   <th className="p-4 font-semibold text-steel-600">Status</th>
                   <th className="p-4 font-semibold text-steel-600">Date</th>
                   <th className="p-4 font-semibold text-steel-600 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {blogs.map(blog => (
-                  <tr key={blog.id} className="border-b border-steel-50 hover:bg-steel-50 transition">
-                    <td className="p-4 font-medium text-charcoal-700">{blog.title}</td>
-                    <td className="p-4 text-steel-500">{blog.author}</td>
+                {contentList.map(item => (
+                  <tr key={item.id + item.contentType} className="border-b border-steel-50 hover:bg-steel-50 transition">
+                    <td className="p-4 font-medium text-charcoal-700">{item.title}</td>
+                    <td className="p-4 text-steel-500">{item.contentType}</td>
                     <td className="p-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${blog.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                        {blog.status}
+                      <span className={`px-2 py-1 text-xs rounded-full ${item.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                        {item.status}
                       </span>
                     </td>
-                    <td className="p-4 text-steel-500">{new Date(blog.createdAt).toLocaleDateString()}</td>
+                    <td className="p-4 text-steel-500">{new Date(item.createdAt).toLocaleDateString()}</td>
                     <td className="p-4 text-right flex justify-end gap-2">
-                      <Link href={`/blog/${blog.slug}`} target="_blank" className="p-2 text-steel-400 hover:text-blue-500 bg-steel-50 rounded-lg"><Eye className="w-4 h-4"/></Link>
-                      <button onClick={() => deleteBlog(blog.slug)} className="p-2 text-steel-400 hover:text-red-500 bg-steel-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
+                      <Link href={`/blog/${item.slug}`} target="_blank" className="p-2 text-steel-400 hover:text-blue-500 bg-steel-50 rounded-lg"><Eye className="w-4 h-4"/></Link>
+                      <button onClick={() => deleteContent(item.slug, item.contentType)} className="p-2 text-steel-400 hover:text-red-500 bg-steel-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
                     </td>
                   </tr>
                 ))}

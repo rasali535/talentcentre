@@ -13,10 +13,16 @@ export default async function BlogsPage() {
   let blogs: any[] = [];
   try {
     if (prisma) {
-      blogs = await prisma.blog.findMany({
+      const textBlogs = await prisma.blog.findMany({
         where: { status: 'published' },
         orderBy: { createdAt: 'desc' }
       });
+      const videoBlogs = await prisma.videoBlog.findMany({
+        where: { status: 'published' },
+        orderBy: { createdAt: 'desc' }
+      });
+      blogs = [...textBlogs.map(b => ({...b, contentType: 'Article'})), ...videoBlogs.map(v => ({...v, contentType: 'Video'}))]
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }
   } catch (err) {
     console.error(err);
@@ -47,14 +53,14 @@ export default async function BlogsPage() {
                   <div className="p-8 flex flex-col flex-grow">
                     <div className="flex items-center gap-4 text-xs font-semibold text-steel-500 uppercase tracking-wider mb-4">
                       <span className="flex items-center gap-1"><Calendar className="w-3 h-3"/> {new Date(blog.createdAt).toLocaleDateString()}</span>
-                      <span className="flex items-center gap-1"><Clock className="w-3 h-3"/> 5 min read</span>
+                      <span className="flex items-center gap-1"><Clock className="w-3 h-3"/> {blog.contentType === "Video" ? "Video" : "5 min read"}</span>
                     </div>
                     <h3 className="text-2xl font-heading font-bold text-charcoal-800 mb-4 group-hover:text-accent-red transition-colors">{blog.title}</h3>
-                    <p className="text-steel-600 mb-8 line-clamp-3 flex-grow">{blog.excerpt}</p>
+                    <p className="text-steel-600 mb-8 line-clamp-3 flex-grow">{blog.excerpt || blog.description}</p>
                     <div className="flex items-center justify-between pt-6 border-t border-steel-100 mt-auto">
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-steel-200 flex items-center justify-center"><User className="w-4 h-4 text-steel-500"/></div>
-                        <span className="text-sm font-medium text-charcoal-700">{blog.author}</span>
+                        <span className="text-sm font-medium text-charcoal-700">{blog.author || "Admin"}</span>
                       </div>
                       <span className="text-accent-red font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">Read <ArrowRight className="w-4 h-4"/></span>
                     </div>

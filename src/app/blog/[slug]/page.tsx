@@ -18,6 +18,14 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
       blog = await prisma.blog.findUnique({
         where: { slug }
       });
+      if (blog) {
+        blog.contentType = 'Article';
+      } else {
+        blog = await prisma.videoBlog.findUnique({
+          where: { slug }
+        });
+        if (blog) blog.contentType = 'Video';
+      }
     }
   } catch (err) {
     console.error(err);
@@ -45,13 +53,13 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
                   <User className="w-6 h-6 text-steel-400" />
                 </div>
                 <div>
-                  <p className="text-charcoal-800 font-bold text-base">{blog.author}</p>
+                  <p className="text-charcoal-800 font-bold text-base">{blog.author || "Admin"}</p>
                   <p>Talent Centre Expert</p>
                 </div>
               </div>
               <div className="hidden md:block w-px h-8 bg-steel-200"></div>
               <div className="flex items-center gap-2"><Calendar className="w-4 h-4"/> {new Date(blog.createdAt).toLocaleDateString()}</div>
-              <div className="flex items-center gap-2"><Clock className="w-4 h-4"/> 5 min read</div>
+              <div className="flex items-center gap-2"><Clock className="w-4 h-4"/> {blog.contentType === "Video" ? "Video Content" : "5 min read"}</div>
               <div className="ml-auto">
                 <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-steel-50 hover:bg-steel-100 transition-colors text-charcoal-700">
                   <Share2 className="w-4 h-4" /> Share
@@ -60,7 +68,21 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
             </div>
           </header>
 
-          <div className="prose prose-lg md:prose-xl max-w-none text-steel-800 marker:text-accent-red prose-headings:font-heading prose-headings:text-charcoal-800 prose-a:text-accent-red hover:prose-a:text-accent-red-dark prose-img:rounded-3xl prose-img:shadow-xl" dangerouslySetInnerHTML={{ __html: blog.content }} />
+          {blog.contentType === 'Video' ? (
+            <div className="space-y-8">
+              <div className="aspect-video bg-charcoal-800 rounded-3xl overflow-hidden shadow-xl">
+                <iframe 
+                  src={blog.videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')} 
+                  className="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <p className="text-xl text-steel-700 leading-relaxed">{blog.description}</p>
+            </div>
+          ) : (
+            <div className="prose prose-lg md:prose-xl max-w-none text-steel-800 marker:text-accent-red prose-headings:font-heading prose-headings:text-charcoal-800 prose-a:text-accent-red hover:prose-a:text-accent-red-dark prose-img:rounded-3xl prose-img:shadow-xl" dangerouslySetInnerHTML={{ __html: blog.content }} />
+          )}
         </div>
       </article>
       <Footer />
