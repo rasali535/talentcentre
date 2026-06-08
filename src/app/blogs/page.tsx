@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer';
 
 const prisma = new PrismaClient();
 
-export const revalidate = 60; // revalidate every minute
+export const dynamic = 'force-dynamic';
 
 export default async function BlogsPage() {
   const blogs = await prisma.blog.findMany({

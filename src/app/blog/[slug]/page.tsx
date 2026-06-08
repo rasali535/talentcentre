@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 
 const prisma = new PrismaClient();
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function SingleBlogPage({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug;
