@@ -1,10 +1,17 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import RichTextEditor from '@/components/blog/RichTextEditor';
 
 export default function CreateBlogPage() {
   const router = useRouter();
+  
+  useEffect(() => {
+    if (!localStorage.getItem('admin_token')) {
+      router.push('/admin');
+    }
+  }, [router]);
+
   const [formData, setFormData] = useState({
     title: '', slug: '', author: '', excerpt: '', status: 'draft'
   });
