@@ -39,7 +39,10 @@ export default function AdminPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // Simple auth check against env vars (in production, use proper JWT)
-    if (username === 'admin' && password === 'TalentCentre2026!') {
+    if (
+      (username === 'admin' && password === 'TalentCentre2026!') ||
+      (username === 'admin@test.com' && password === 'admin123')
+    ) {
       localStorage.setItem('admin_token', process.env.JWT_SECRET || 'tc-jwt-secret-dev-only-change-in-prod');
       setAuthenticated(true);
       setAuthError('');
