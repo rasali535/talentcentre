@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = process.env.DATABASE_URL ? new PrismaClient() : null;
 
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
+  if (!prisma) return NextResponse.json({ error: 'DB not configured' }, { status: 500 });
   try {
     const slug = (await params).slug;
     const blog = await prisma.blog.findUnique({ where: { slug } });
@@ -15,6 +16,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ slug: string }> }) {
+  if (!prisma) return NextResponse.json({ error: 'DB not configured' }, { status: 500 });
   try {
     const slug = (await params).slug;
     const body = await req.json();
@@ -29,6 +31,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ slug: st
 }
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ slug: string }> }) {
+  if (!prisma) return NextResponse.json({ error: 'DB not configured' }, { status: 500 });
   try {
     const slug = (await params).slug;
     await prisma.blog.delete({ where: { slug } });
