@@ -24,7 +24,7 @@ const navLinks = [
   },
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'Industries', href: '/industries' },
-  { label: 'Insights', href: '/blogs' },
+  { label: 'Blogs', href: '/blogs' },
   { label: 'Admin', href: '/admin/blogs' },
   { label: 'Contact', href: '/contact' },
 ];

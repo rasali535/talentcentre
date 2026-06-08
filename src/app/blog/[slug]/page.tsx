@@ -33,7 +33,7 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
       <article className="min-h-screen bg-white pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/blogs" className="inline-flex items-center gap-2 text-steel-500 hover:text-accent-red font-medium mb-12 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Back to Insights
+            <ArrowLeft className="w-4 h-4" /> Back to Blogs
           </Link>
           
           <header className="mb-16">

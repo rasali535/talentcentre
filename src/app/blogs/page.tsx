@@ -28,13 +28,13 @@ export default async function BlogsPage() {
       <div className="min-h-screen bg-steel-50 pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-heading font-bold text-charcoal-800 mb-6 tracking-tight">Insights & Perspectives</h1>
+            <h1 className="text-5xl md:text-6xl font-heading font-bold text-charcoal-800 mb-6 tracking-tight">Our Blog</h1>
             <p className="text-xl text-steel-600 max-w-3xl mx-auto">Expert analysis, thought leadership, and industry trends from the Talent Centre team.</p>
           </div>
 
           {blogs.length === 0 ? (
             <div className="text-center py-24 bg-white rounded-3xl border border-steel-200">
-              <p className="text-xl text-steel-500">New insights are being prepared. Check back soon.</p>
+              <p className="text-xl text-steel-500">New blogs are being prepared. Check back soon.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -13,7 +13,7 @@ const footerLinks = {
     { label: 'About Us', href: '/about' },
     { label: 'Our Team', href: '/about#team' },
     { label: 'Case Studies', href: '/case-studies' },
-    { label: 'Insights', href: '/blogs' },
+    { label: 'Blogs', href: '/blogs' },
     { label: 'Admin Portal', href: '/admin/blogs' },
     { label: 'Contact', href: '/contact' },
   ],
