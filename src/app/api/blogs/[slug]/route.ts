@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+const prisma = process.env.DATABASE_URL ? new PrismaClient() : null;
 
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {

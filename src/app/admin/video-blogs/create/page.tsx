@@ -5,6 +5,16 @@ import { Video, Mic, StopCircle, RefreshCw } from 'lucide-react';
 
 export default function CreateVideoBlogPage() {
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  useEffect(() => {
+    if (!localStorage.getItem('admin_token')) {
+      router.push('/admin');
+    } else {
+      setIsAuthenticated(true);
+    }
+  }, [router]);
+
   const [formData, setFormData] = useState({
     title: '', slug: '', description: '', videoUrl: '', status: 'draft'
   });
@@ -15,6 +25,8 @@ export default function CreateVideoBlogPage() {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
   const [recordedUrl, setRecordedUrl] = useState('');
+
+  if (!isAuthenticated) return null;
 
   const startCamera = async () => {
     try {

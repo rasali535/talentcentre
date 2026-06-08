@@ -3,18 +3,32 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2, Eye, Video } from 'lucide-react';
 
+import { useRouter } from 'next/navigation';
+
 export default function AdminBlogsPage() {
+  const router = useRouter();
   const [blogs, setBlogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    fetch('/api/blogs')
-      .then(res => res.json())
-      .then(data => {
-        setBlogs(data.blogs || []);
-        setLoading(false);
-      });
-  }, []);
+    if (!localStorage.getItem('admin_token')) {
+      router.push('/admin');
+    } else {
+      setIsAuthenticated(true);
+      fetch('/api/blogs')
+        .then(res => res.json())
+        .then(data => {
+          setBlogs(data.blogs || []);
+          setLoading(false);
+        }).catch(err => {
+          console.error(err);
+          setLoading(false);
+        });
+    }
+  }, [router]);
+
+  if (!isAuthenticated) return null;
 
   const deleteBlog = async (slug: string) => {
     if (!confirm('Are you sure you want to delete this blog?')) return;

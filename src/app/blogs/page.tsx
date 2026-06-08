@@ -5,15 +5,22 @@ import { ArrowRight, Calendar, Clock, User } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
-const prisma = new PrismaClient();
+const prisma = process.env.DATABASE_URL ? new PrismaClient() : null;
 
 export const dynamic = 'force-dynamic';
 
 export default async function BlogsPage() {
-  const blogs = await prisma.blog.findMany({
-    where: { status: 'published' },
-    orderBy: { createdAt: 'desc' }
-  });
+  let blogs: any[] = [];
+  try {
+    if (prisma) {
+      blogs = await prisma.blog.findMany({
+        where: { status: 'published' },
+        orderBy: { createdAt: 'desc' }
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
 
   return (
     <>

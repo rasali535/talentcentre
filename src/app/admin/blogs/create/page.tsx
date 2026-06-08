@@ -5,10 +5,13 @@ import RichTextEditor from '@/components/blog/RichTextEditor';
 
 export default function CreateBlogPage() {
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   useEffect(() => {
     if (!localStorage.getItem('admin_token')) {
       router.push('/admin');
+    } else {
+      setIsAuthenticated(true);
     }
   }, [router]);
 
@@ -17,6 +20,8 @@ export default function CreateBlogPage() {
   });
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
+
+  if (!isAuthenticated) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

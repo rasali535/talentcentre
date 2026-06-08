@@ -6,15 +6,22 @@ import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
-const prisma = new PrismaClient();
+const prisma = process.env.DATABASE_URL ? new PrismaClient() : null;
 
 export const dynamic = 'force-dynamic';
 
 export default async function SingleBlogPage({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug;
-  const blog = await prisma.blog.findUnique({
-    where: { slug }
-  });
+  let blog: any = null;
+  try {
+    if (prisma) {
+      blog = await prisma.blog.findUnique({
+        where: { slug }
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
 
   if (!blog || blog.status !== 'published') {
     notFound();
