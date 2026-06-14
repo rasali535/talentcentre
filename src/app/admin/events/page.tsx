@@ -15,6 +15,32 @@ export default function AdminEventsPage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [loading, setLoading] = useState(true);
+  const [replyTo, setReplyTo] = useState<{email: string, subject: string} | null>(null);
+  const [replyMessage, setReplyMessage] = useState('');
+  const [sending, setSending] = useState(false);
+
+  const handleSendReply = async () => {
+    if (!replyTo || !replyMessage) return;
+    setSending(true);
+    try {
+      const res = await fetch('/api/respond', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ to: replyTo.email, subject: replyTo.subject, message: replyMessage }),
+      });
+      if (res.ok) {
+        setReplyTo(null);
+        setReplyMessage('');
+        alert('Response sent successfully!');
+      } else {
+        alert('Failed to send response.');
+      }
+    } catch {
+      alert('An error occurred.');
+    } finally {
+      setSending(false);
+    }
+  };
 
   const fetchRegistrations = useCallback(async () => {
     setLoading(true);
@@ -107,12 +133,12 @@ export default function AdminEventsPage() {
                         )}
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <a 
-                          href={`mailto:${reg.email}?subject=Talent Centre - Your Registration for ${reg.eventName}`}
+                        <button 
+                          onClick={() => setReplyTo({ email: reg.email, subject: `Talent Centre - Your Registration for ${reg.eventName}` })}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-steel-100 text-steel-700 hover:bg-steel-200 text-sm font-medium transition-colors"
                         >
                           Respond ➔
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -122,6 +148,53 @@ export default function AdminEventsPage() {
           </div>
         </div>
       </div>
+
+      {replyTo && (
+        <div className="fixed inset-0 bg-charcoal-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl">
+            <div className="p-6 border-b border-steel-100">
+              <h2 className="text-xl font-heading font-bold text-charcoal-800">Send Response</h2>
+              <p className="text-sm text-steel-500 mt-1">To: {replyTo.email}</p>
+            </div>
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-steel-700 mb-1">Subject</label>
+                <input 
+                  type="text" 
+                  value={replyTo.subject} 
+                  onChange={e => setReplyTo({...replyTo, subject: e.target.value})}
+                  className="w-full px-4 py-2 border border-steel-200 rounded-xl bg-steel-50 focus:bg-white" 
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-steel-700 mb-1">Message</label>
+                <textarea 
+                  rows={6}
+                  value={replyMessage}
+                  onChange={e => setReplyMessage(e.target.value)}
+                  placeholder="Type your response here..."
+                  className="w-full px-4 py-3 border border-steel-200 rounded-xl focus:bg-white"
+                />
+              </div>
+            </div>
+            <div className="p-6 border-t border-steel-100 bg-steel-50 flex justify-end gap-3">
+              <button 
+                onClick={() => { setReplyTo(null); setReplyMessage(''); }}
+                className="px-4 py-2 text-steel-600 font-medium hover:bg-steel-200 rounded-xl transition"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleSendReply}
+                disabled={sending}
+                className="px-6 py-2 bg-accent-red text-white font-medium rounded-xl hover:bg-accent-red-dark disabled:opacity-50 transition"
+              >
+                {sending ? 'Sending...' : 'Send Message'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

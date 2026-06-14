@@ -42,6 +42,24 @@ export async function POST(req: Request) {
           <p><strong>Type:</strong> ${eventType || 'N/A'}</p>
         `,
       });
+
+      // Send automated confirmation to the user
+      await resend.emails.send({
+        from: 'Talent Centre <onboarding@resend.dev>', // Update to verified domain in production
+        to: [email],
+        subject: `Registration Confirmed: ${eventName}`,
+        html: `
+          <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto;">
+            <h2>Registration Successful!</h2>
+            <p>Dear ${fullName},</p>
+            <p>Thank you for registering for <strong>${eventName}</strong>.</p>
+            <p>We have successfully received your details and our team will be in touch with you shortly regarding the next steps and event details.</p>
+            <br/>
+            <p>Best regards,</p>
+            <p><strong>The Talent Centre Team</strong></p>
+          </div>
+        `,
+      });
     }
 
     return NextResponse.json({ success: true, registration }, { status: 201 });
