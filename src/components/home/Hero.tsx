@@ -72,8 +72,8 @@ export default function Hero() {
               className="text-lg sm:text-xl text-steel-300 leading-relaxed mb-10 max-w-xl"
             >
               We partner with forward-thinking organizations to build resilient strategies,
-              develop exceptional talent, and drive transformative business outcomes across
-              Southern Africa.
+              develop exceptional entrepreneurial talent, and drive transformative business outcomes by
+              motivating continuous improvement in the workforce.
             </motion.p>
 
             <motion.div
@@ -104,7 +104,7 @@ export default function Hero() {
               className="flex items-center gap-8 mt-14 pt-10 border-t border-white/10"
             >
               <div>
-                <p className="text-3xl font-heading font-bold text-white">15+</p>
+                <p className="text-3xl font-heading font-bold text-white">25+</p>
                 <p className="text-xs text-steel-400 mt-1">Years Experience</p>
               </div>
               <div className="w-px h-12 bg-white/10" />

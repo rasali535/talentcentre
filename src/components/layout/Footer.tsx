@@ -6,6 +6,7 @@ import {
   Phone,
   Globe,
   ExternalLink,
+  MapPin,
 } from 'lucide-react';
 
 const footerLinks = {
@@ -35,8 +36,8 @@ export default function Footer() {
             {/* Left: Logo & Socials */}
             <div className="flex flex-col items-center lg:items-start gap-4">
               <Link href="/" className="inline-block transition-all duration-300 hover:opacity-80">
-                <div className="relative w-14 h-14 flex items-center justify-center overflow-hidden rounded-lg">
-                  <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain" />
+                <div className="relative w-40 h-12 flex items-center justify-center overflow-hidden rounded bg-white/90 p-1">
+                  <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain p-1" />
                 </div>
               </Link>
               <div className="flex items-center gap-3">
@@ -84,21 +85,34 @@ export default function Footer() {
             </ul>
 
             {/* Right: Contact */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 lg:gap-6">
+            <div className="flex flex-col items-center lg:items-start gap-3 text-sm text-steel-300">
               <a
                 href="mailto:info@talentcentre.co.za"
-                className="flex items-center gap-2 text-sm text-steel-300 hover:text-white transition-colors duration-300"
+                className="flex items-center gap-2 hover:text-white transition-colors duration-300"
               >
                 <Mail className="w-4 h-4 text-accent-red" />
                 info@talentcentre.co.za
               </a>
-              <a
-                href="tel:+26775618647"
-                className="flex items-center gap-2 text-sm text-steel-300 hover:text-white transition-colors duration-300"
-              >
-                <Phone className="w-4 h-4 text-accent-red" />
-                +267 75 618 647
-              </a>
+              <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4 lg:gap-6">
+                <a
+                  href="tel:+26775618647"
+                  className="flex items-center gap-2 hover:text-white transition-colors duration-300"
+                >
+                  <Phone className="w-4 h-4 text-accent-red" />
+                  +267 75 618 647
+                </a>
+                <a
+                  href="tel:+27827356340"
+                  className="flex items-center gap-2 hover:text-white transition-colors duration-300"
+                >
+                  <Phone className="w-4 h-4 text-accent-red" />
+                  +27 82 735 6340 (RSA)
+                </a>
+              </div>
+              <div className="flex items-center gap-2 mt-1">
+                <MapPin className="w-4 h-4 text-accent-red" />
+                <span>Plot 21571, Phakalane, Gaborone, Botswana</span>
+              </div>
             </div>
           </div>
         </div>

@@ -57,7 +57,7 @@ export default function ContactPage() {
               Let&apos;s Start a <span className="gradient-text">Conversation</span>
             </h1>
             <p className="text-lg text-steel-300 max-w-xl">
-              Whether you need strategic advice, want to explore a partnership, or have a question — we&apos;re here to help.
+              Whether you need accounting services, company secretarial services, training, strategic advice, want to explore a partnership, or have a question — we&apos;re here to help.
             </p>
           </AnimatedSection>
         </div>

@@ -23,7 +23,7 @@ const navLinks = [
     ],
   },
   { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Industries', href: '/industries' },
+  { label: 'Events', href: '/events' },
   { label: 'Blogs', href: '/blogs' },
   { label: 'Admin', href: '/admin/blogs' },
   { label: 'Contact', href: '/contact' },
@@ -61,8 +61,8 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center group transition-all duration-300">
-              <div className="relative w-14 h-14 flex items-center justify-center overflow-hidden rounded-lg">
-                <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain" />
+              <div className="relative w-40 h-12 flex items-center justify-center overflow-hidden rounded bg-white/90 p-1">
+                <Image src="/logo.png" alt="Talent Centre Logo" fill className="object-contain p-1" />
               </div>
             </Link>
 

@@ -15,12 +15,12 @@ const values = [
 ];
 
 const milestones = [
-  { year: '2010', title: 'Founded', desc: 'Talent Centre established in Gaborone, Botswana.' },
-  { year: '2013', title: 'Regional Expansion', desc: 'Extended services across Southern Africa.' },
-  { year: '2016', title: '100+ Clients', desc: 'Reached a milestone of 100 corporate clients served.' },
-  { year: '2019', title: 'Training Division', desc: 'Launched dedicated Training & Development unit.' },
-  { year: '2022', title: 'Digital Transformation', desc: 'Integrated digital advisory and AI-powered consulting.' },
-  { year: '2024', title: '200+ Clients', desc: 'Serving over 200 organizations across the region.' },
+  { year: '2011', title: 'Founded', desc: 'Talent Centre established in Gaborone, Botswana.' },
+  { year: '2016', title: 'Regional Expansion', desc: 'Extended services across Southern Africa.' },
+  { year: '2018', title: '100+ Clients', desc: 'Reached a milestone of 100 corporate clients served.' },
+  { year: '2019', title: 'Training & Mentoring', desc: 'Regional entrepreneurship training and mentoring.' },
+  { year: '2022', title: '200+ Clients', desc: 'Serving over 200 organizations across the region.' },
+  { year: '2024', title: 'Diversification', desc: 'Diversified into other forms of business - transport and logistics exemplifying our entrepreneurial skills. We practice what we teach.' },
 ];
 
 export default function AboutPage() {
@@ -67,7 +67,7 @@ export default function AboutPage() {
             <AnimatedSection delay={0.2}>
               <div className="bg-gradient-to-br from-steel-50 to-white rounded-3xl p-8 border border-steel-100">
                 <div className="grid grid-cols-2 gap-6">
-                  {[{ val: '15+', lbl: 'Years Experience' }, { val: '200+', lbl: 'Clients Served' }, { val: '50+', lbl: 'Active Projects' }, { val: '98%', lbl: 'Satisfaction Rate' }].map((s) => (
+                  {[{ val: '15+', lbl: 'Years Experience' }, { val: '200+', lbl: 'Clients Served' }, { val: '50+', lbl: 'Active Projects' }, { val: '88%', lbl: 'Satisfaction Rate' }].map((s) => (
                     <div key={s.lbl} className="text-center p-4">
                       <p className="text-3xl font-heading font-bold gradient-text-blue">{s.val}</p>
                       <p className="text-steel-500 text-sm mt-1">{s.lbl}</p>
@@ -92,7 +92,7 @@ export default function AboutPage() {
               <div className="h-full bg-white rounded-3xl border border-steel-200 p-8 md:p-10 text-center shadow-premium">
                 <div className="relative w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-premium overflow-hidden">
                   <Image
-                    src="/humphrey.png"
+                    src="/humphrey.jpeg"
                     alt="Humphrey Chawafambira"
                     fill
                     className="object-cover object-top"
@@ -101,10 +101,10 @@ export default function AboutPage() {
                 <h3 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">Humphrey Chawafambira</h3>
                 <p className="text-accent-red font-semibold mb-4">Business Development Consultant & Founder</p>
                 <p className="text-steel-600 leading-relaxed mb-6">
-                  With over 15 years of experience in business development, organizational consulting, and strategic advisory, Humphrey has guided hundreds of organizations across Southern Africa toward sustainable growth. His expertise spans government, corporate, SME, and NGO sectors, with a proven track record of delivering transformative outcomes.
+                  With over 23 years of experience in business development, organizational consulting, and strategic advisory, Humphrey has guided hundreds of organizations across Southern Africa toward sustainable growth. Industry experience spans government, corporate, SME, and NGO sectors, with a proven track record of delivering transformative outcomes. Main areas of expertise include training, coaching and mentoring, financial statements preparation and analysis, internal controls, internal audits, taxation, business planning and financial management.
                 </p>
                 <div className="flex flex-wrap justify-center gap-2 mt-auto">
-                  {['Strategic Planning', 'Business Development', 'Organizational Change', 'Executive Coaching'].map((s) => (
+                  {['Strategic Planning', 'Business Development', 'Organizational Change', 'Executive Coaching', 'Mentoring', 'Training'].map((s) => (
                     <span key={s} className="px-3 py-1 rounded-full bg-accent-red/10 text-accent-red text-xs font-semibold">{s}</span>
                   ))}
                 </div>
@@ -115,7 +115,7 @@ export default function AboutPage() {
               <div className="h-full bg-white rounded-3xl border border-steel-200 p-8 md:p-10 text-center shadow-premium flex flex-col">
                 <div className="relative w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-premium overflow-hidden">
                   <Image
-                    src="/tafadzwa.png"
+                    src="/tafadzwa.jpeg"
                     alt="Tafadzwa Chawafambira"
                     fill
                     className="object-cover object-top"
@@ -124,10 +124,10 @@ export default function AboutPage() {
                 <h3 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">Tafadzwa Chawafambira</h3>
                 <p className="text-accent-red font-semibold mb-4">Financial Consultant</p>
                 <p className="text-steel-600 leading-relaxed mb-6">
-                  Tafadzwa brings extensive expertise in corporate finance, financial planning, and risk management. She partners with organizations to optimize their financial strategies, ensuring sustainable growth, robust financial health, and operational efficiency across both SME and corporate sectors.
+                  Tafadzwa brings extensive expertise in corporate finance and accounting, financial planning, and risk management. She partners with organizations to optimize their financial strategies, ensuring sustainable growth, robust financial health, and operational efficiency across both SME and corporate sectors by setting effective accounting systems and teams.
                 </p>
                 <div className="flex flex-wrap justify-center gap-2 mt-auto">
-                  {['Corporate Finance', 'Financial Planning', 'Risk Management', 'Operational Efficiency'].map((s) => (
+                  {['Corporate Finance', 'Financial Planning', 'Risk Management', 'Operational Efficiency', 'Accounting'].map((s) => (
                     <span key={s} className="px-3 py-1 rounded-full bg-accent-red/10 text-accent-red text-xs font-semibold">{s}</span>
                   ))}
                 </div>
@@ -179,6 +179,28 @@ export default function AboutPage() {
                     <h4 className="font-heading font-semibold text-charcoal-700">{m.title}</h4>
                     <p className="text-steel-500 text-sm mt-1">{m.desc}</p>
                   </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-24 bg-white" id="gallery">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <SectionHeading badge="Gallery" title="Our Events & Highlights" />
+          </AnimatedSection>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+            {[1, 2, 3].map((i) => (
+              <AnimatedSection key={i} delay={i * 0.1}>
+                <div className="relative h-64 rounded-2xl overflow-hidden bg-steel-100 border border-steel-200 group">
+                  <div className="absolute inset-0 flex items-center justify-center text-steel-400">
+                    <span>Event Photo {i}</span>
+                  </div>
+                  {/* Replace with actual event photos when available by uncommenting the Image below */}
+                  {/* <Image src={`/event-${i}.jpg`} alt={`Event ${i}`} fill className="object-cover group-hover:scale-105 transition-transform duration-500" /> */}
                 </div>
               </AnimatedSection>
             ))}
