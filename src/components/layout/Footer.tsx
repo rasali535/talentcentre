@@ -121,7 +121,7 @@ export default function Footer() {
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-steel-400 text-xs text-center sm:text-left">
-              © {currentYear} Talent Centre. All rights reserved. | Web dev by Ras Ali Labs
+              © {currentYear} Talent Centre. All rights reserved. | Web dev by <a href="https://www.rasalilabs.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">Ras Ali Labs</a>
             </p>
             <div className="flex items-center gap-6">
               <Link href="/privacy" className="text-steel-400 hover:text-white text-xs transition-colors duration-300">
