@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Lead {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   fullName    String   @map("full_name")
   email       String
   phone       String?
@@ -24,7 +24,7 @@ model Lead {
 }
 
 model ChatSession {
-  id        String   @id @default(cuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionId String   @unique @map("session_id")
   messages  Json     @default("[]")
   leadId    String?  @map("lead_id")
@@ -35,7 +35,7 @@ model ChatSession {
 }
 
 model AdminUser {
-  id           String   @id @default(cuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   username     String   @unique
   passwordHash String   @map("password_hash")
   createdAt    DateTime @default(now()) @map("created_at")
@@ -44,19 +44,19 @@ model AdminUser {
 }
 
 model Blog {
-  id             String    @id @default(cuid())
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
   title          String
   slug           String    @unique
-  content        String    @db.Text
-  excerpt        String?   @db.Text
+  content        String
+  excerpt        String?
   featuredImage  String?   @map("featured_image")
   author         String
   status         String    @default("draft") // draft, published, scheduled
-  categoryId     String?   @map("category_id")
+  categoryId     String?   @db.ObjectId @map("category_id")
   category       Category? @relation(fields: [categoryId], references: [id])
   tags           String[]  @default([])
   seoTitle       String?   @map("seo_title")
-  seoDescription String?   @db.Text @map("seo_description")
+  seoDescription String?   @map("seo_description")
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
   publishedAt    DateTime? @map("published_at")
@@ -65,17 +65,17 @@ model Blog {
 }
 
 model VideoBlog {
-  id             String    @id @default(cuid())
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
   title          String
   slug           String    @unique
-  description    String?   @db.Text
+  description    String?
   videoUrl       String    @map("video_url") // YouTube url or internal upload url
   thumbnail      String?
-  categoryId     String?   @map("category_id")
+  categoryId     String?   @db.ObjectId @map("category_id")
   category       Category? @relation(fields: [categoryId], references: [id])
   tags           String[]  @default([])
   seoTitle       String?   @map("seo_title")
-  seoDescription String?   @db.Text @map("seo_description")
+  seoDescription String?   @map("seo_description")
   status         String    @default("draft") // draft, published, scheduled
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
@@ -85,7 +85,7 @@ model VideoBlog {
 }
 
 model Category {
-  id         String      @id @default(cuid())
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
   name       String      @unique
   slug       String      @unique
   blogs      Blog[]
@@ -97,7 +97,7 @@ model Category {
 }
 
 model MediaAsset {
-  id         String   @id @default(cuid())
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   filename   String
   type       String   // image, video, document
   url        String   @unique
@@ -107,7 +107,7 @@ model MediaAsset {
 }
 
 model EventRegistration {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   fullName    String   @map("full_name")
   email       String
   phone       String?
