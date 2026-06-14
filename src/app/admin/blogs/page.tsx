@@ -41,6 +41,26 @@ export default function AdminBlogsPage() {
     setContentList(contentList.filter(item => item.slug !== slug));
   };
 
+  const togglePublish = async (slug: string, contentType: string, currentStatus: string) => {
+    const newStatus = currentStatus === 'published' ? 'draft' : 'published';
+    const endpoint = contentType === 'Video' ? `/api/video-blogs/${slug}` : `/api/blogs/${slug}`;
+    
+    try {
+      const res = await fetch(endpoint, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (res.ok) {
+        setContentList(contentList.map(item => 
+          item.slug === slug ? { ...item, status: newStatus } : item
+        ));
+      }
+    } catch (err) {
+      console.error('Failed to toggle publish status', err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-steel-50 pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -88,13 +108,17 @@ export default function AdminBlogsPage() {
                     <td className="p-4 font-medium text-charcoal-700">{item.title}</td>
                     <td className="p-4 text-steel-500">{item.contentType}</td>
                     <td className="p-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${item.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                      <button 
+                        onClick={() => togglePublish(item.slug, item.contentType, item.status)}
+                        className={`px-2 py-1 text-xs rounded-full cursor-pointer transition-opacity hover:opacity-80 ${item.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}
+                      >
                         {item.status}
-                      </span>
+                      </button>
                     </td>
                     <td className="p-4 text-steel-500">{new Date(item.createdAt).toLocaleDateString()}</td>
                     <td className="p-4 text-right flex justify-end gap-2">
                       <Link href={`/blog/${item.slug}`} target="_blank" className="p-2 text-steel-400 hover:text-blue-500 bg-steel-50 rounded-lg"><Eye className="w-4 h-4"/></Link>
+                      <Link href={`/admin/${item.contentType === 'Video' ? 'video-blogs' : 'blogs'}/${item.slug}/edit`} className="p-2 text-steel-400 hover:text-amber-500 bg-steel-50 rounded-lg"><Edit className="w-4 h-4"/></Link>
                       <button onClick={() => deleteContent(item.slug, item.contentType)} className="p-2 text-steel-400 hover:text-red-500 bg-steel-50 rounded-lg"><Trash2 className="w-4 h-4"/></button>
                     </td>
                   </tr>
