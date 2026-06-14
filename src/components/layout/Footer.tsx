@@ -50,7 +50,7 @@ export default function Footer() {
                   <Globe className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://github.com/rasali535/talentcentre"
+                  href="https://www.facebook.com/share/1Dxtw7xGNe/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 hover:text-blue-300 transition-all duration-300"
