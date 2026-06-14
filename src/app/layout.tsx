@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import EventPopup from "@/components/ui/EventPopup";
 import ChatWidget from "@/components/chat/ChatWidget";
 import CookieConsent from "@/components/ui/CookieConsent";
 
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body className="antialiased w-full overflow-x-hidden text-steel-800 bg-white flex flex-col min-h-screen">
+        <EventPopup />
         <Navbar />
         <main>{children}</main>
         <Footer />

@@ -105,3 +105,16 @@ model MediaAsset {
 
   @@map("media_assets")
 }
+
+model EventRegistration {
+  id          String   @id @default(cuid())
+  fullName    String   @map("full_name")
+  email       String
+  phone       String?
+  company     String?
+  eventName   String   @map("event_name")
+  eventType   String?  @map("event_type") // e.g. "Physical", "Online", or "Programme"
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("event_registrations")
+}

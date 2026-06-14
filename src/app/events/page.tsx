@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
-import { Calendar, Users, Target, BookOpen, Clock, MapPin, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Calendar, Users, Target, BookOpen, Clock, MapPin, ArrowRight, X, Send, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
@@ -24,6 +25,54 @@ const productivityProgrammes = [
 ];
 
 export default function EventsPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<{ title: string; type?: string } | null>(null);
+  
+  // Form State
+  const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', company: '' });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const openRegistration = (title: string, type?: string) => {
+    setSelectedEvent({ title, type });
+    setIsModalOpen(true);
+    setSubmitted(false);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    setTimeout(() => {
+      setSelectedEvent(null);
+      setSubmitted(false);
+      setFormData({ fullName: '', email: '', phone: '', company: '' });
+    }, 300);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch('/api/events/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          eventName: selectedEvent?.title,
+          eventType: selectedEvent?.type,
+        }),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch (err) {
+      console.error('Registration failed:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   return (
     <>
       <section className="pt-32 pb-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
@@ -54,7 +103,7 @@ export default function EventsPage() {
           <div className="grid lg:grid-cols-2 gap-8 mt-12">
             {/* Physical Sessions */}
             <AnimatedSection delay={0.1}>
-              <div className="bg-steel-50 rounded-2xl border border-steel-100 p-8 h-full">
+              <div className="bg-steel-50 rounded-2xl border border-steel-100 p-8 h-full flex flex-col">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-accent-red/10 flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-accent-red" />
@@ -79,18 +128,21 @@ export default function EventsPage() {
                   </div>
                 </div>
                 <div className="mt-auto pt-6 border-t border-steel-200">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center mb-4">
                     <span className="text-steel-500 font-medium">Registration Fee</span>
-                    <span className="text-2xl font-bold text-charcoal-700">P4,200</span>
+                    <div className="text-right">
+                      <span className="text-2xl font-bold text-charcoal-700 block leading-none">P4,200</span>
+                      <span className="text-xs text-steel-400">for 6 months</span>
+                    </div>
                   </div>
-                  <p className="text-right text-xs text-steel-400">for 6 months</p>
+                  <Button variant="primary" className="w-full" onClick={() => openRegistration("'Tsala Ya Nnete'", "Physical Sessions")}>Register Now</Button>
                 </div>
               </div>
             </AnimatedSection>
 
             {/* Online Sessions */}
             <AnimatedSection delay={0.2}>
-              <div className="bg-steel-50 rounded-2xl border border-steel-100 p-8 h-full">
+              <div className="bg-steel-50 rounded-2xl border border-steel-100 p-8 h-full flex flex-col">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center">
                     <Users className="w-6 h-6 text-blue-600" />
@@ -115,11 +167,14 @@ export default function EventsPage() {
                   </div>
                 </div>
                 <div className="mt-auto pt-6 border-t border-steel-200">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center mb-4">
                     <span className="text-steel-500 font-medium">Registration Fee</span>
-                    <span className="text-2xl font-bold text-charcoal-700">P3,000</span>
+                    <div className="text-right">
+                      <span className="text-2xl font-bold text-charcoal-700 block leading-none">P3,000</span>
+                      <span className="text-xs text-steel-400">for 3 months</span>
+                    </div>
                   </div>
-                  <p className="text-right text-xs text-steel-400">for 3 months</p>
+                  <Button variant="primary" className="w-full" onClick={() => openRegistration("'Tsala Ya Nnete'", "Online Sessions")}>Register Now</Button>
                 </div>
               </div>
             </AnimatedSection>
@@ -157,9 +212,12 @@ export default function EventsPage() {
                       </div>
                     )}
                   </div>
-                  <div className="mt-4 pt-4 border-t border-steel-100 flex justify-between items-center">
-                    <span className="text-xs font-medium text-steel-400 uppercase tracking-wider">Fee</span>
-                    <span className="font-bold text-accent-red">{prog.price}</span>
+                  <div className="mt-4 pt-4 border-t border-steel-100 flex flex-col gap-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium text-steel-400 uppercase tracking-wider">Fee</span>
+                      <span className="font-bold text-accent-red">{prog.price}</span>
+                    </div>
+                    <Button variant="outline" size="sm" className="w-full" onClick={() => openRegistration(prog.title, "Productivity Programme")}>Register</Button>
                   </div>
                 </div>
               </AnimatedSection>
@@ -168,16 +226,78 @@ export default function EventsPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-br from-charcoal-800 via-charcoal-700 to-charcoal-600 relative overflow-hidden">
-        <div className="absolute inset-0 grid-pattern opacity-10" />
-        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">Ready to Participate?</h2>
-            <p className="text-steel-300 mb-8">Register for an upcoming session or programme to secure your spot.</p>
-            <Button variant="primary" size="lg" href="/contact" icon={<ArrowRight className="w-5 h-5" />}>Register Now</Button>
-          </AnimatedSection>
-        </div>
-      </section>
+      {/* Registration Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-charcoal-900/60 backdrop-blur-sm overflow-y-auto"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="relative w-full max-w-lg bg-white rounded-2xl shadow-premium-xl my-8 border border-steel-200"
+            >
+              <div className="flex items-center justify-between p-6 border-b border-steel-100">
+                <h2 className="text-xl font-heading font-bold text-charcoal-700">Event Registration</h2>
+                <button onClick={handleClose} className="p-2 rounded-lg text-steel-500 hover:bg-steel-100 transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6">
+                {submitted ? (
+                  <div className="text-center py-8">
+                    <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                    <h3 className="text-2xl font-heading font-bold text-charcoal-700 mb-2">Registration Received!</h3>
+                    <p className="text-steel-600 mb-6">Thank you for registering for {selectedEvent?.title}. Our team will contact you shortly with payment details and further instructions.</p>
+                    <Button variant="primary" onClick={handleClose}>Done</Button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="mb-6 p-4 bg-steel-50 rounded-xl border border-steel-200">
+                      <p className="text-xs text-steel-500 uppercase tracking-wider font-semibold mb-1">Selected Event</p>
+                      <p className="font-heading font-bold text-charcoal-700">{selectedEvent?.title}</p>
+                      {selectedEvent?.type && <p className="text-sm text-accent-red mt-1">{selectedEvent.type}</p>}
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-steel-700 mb-1.5">Full Name *</label>
+                        <input name="fullName" value={formData.fullName} onChange={handleChange} required className="w-full px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-charcoal-700 text-sm focus:ring-2 focus:ring-accent-red/20 outline-none" placeholder="Your full name" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-steel-700 mb-1.5">Email Address *</label>
+                        <input name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-charcoal-700 text-sm focus:ring-2 focus:ring-accent-red/20 outline-none" placeholder="you@company.com" />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-steel-700 mb-1.5">Phone Number</label>
+                          <input name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-charcoal-700 text-sm focus:ring-2 focus:ring-accent-red/20 outline-none" placeholder="+267..." />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-steel-700 mb-1.5">Company</label>
+                          <input name="company" value={formData.company} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-charcoal-700 text-sm focus:ring-2 focus:ring-accent-red/20 outline-none" placeholder="Organization" />
+                        </div>
+                      </div>
+                      
+                      <div className="pt-4 mt-6 border-t border-steel-100 flex justify-end gap-3">
+                        <Button variant="ghost" onClick={handleClose} type="button">Cancel</Button>
+                        <Button variant="primary" type="submit" disabled={loading} icon={loading ? undefined : <Send className="w-4 h-4" />}>
+                          {loading ? 'Submitting...' : 'Complete Registration'}
+                        </Button>
+                      </div>
+                    </form>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
