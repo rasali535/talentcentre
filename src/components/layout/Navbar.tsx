@@ -25,8 +25,7 @@ const navLinks = [
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'Events', href: '/events' },
   { label: 'Blogs', href: '/blogs' },
-  { label: 'Admin Blogs', href: '/admin/blogs' },
-  { label: 'Admin Events', href: '/admin/events' },
+  { label: 'Admin Portal', href: '/admin' },
   { label: 'Contact', href: '/contact' },
 ];
 
