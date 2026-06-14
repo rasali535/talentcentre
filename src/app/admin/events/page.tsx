@@ -81,6 +81,7 @@ export default function AdminEventsPage() {
                     <th className="px-6 py-4 text-xs font-semibold text-steel-600 uppercase tracking-wider">Attendee</th>
                     <th className="px-6 py-4 text-xs font-semibold text-steel-600 uppercase tracking-wider">Contact</th>
                     <th className="px-6 py-4 text-xs font-semibold text-steel-600 uppercase tracking-wider">Event Details</th>
+                    <th className="px-6 py-4 text-xs font-semibold text-steel-600 uppercase tracking-wider text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-steel-100">
@@ -104,6 +105,14 @@ export default function AdminEventsPage() {
                             {reg.eventType}
                           </span>
                         )}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <a 
+                          href={`mailto:${reg.email}?subject=Talent Centre - Your Registration for ${reg.eventName}`}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-steel-100 text-steel-700 hover:bg-steel-200 text-sm font-medium transition-colors"
+                        >
+                          Respond ➔
+                        </a>
                       </td>
                     </tr>
                   ))}

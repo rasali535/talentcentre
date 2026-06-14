@@ -182,6 +182,7 @@ export default function AdminPage() {
                     <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Source</th>
                     <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Date</th>
                     <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Status</th>
+                    <th className="text-right px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -206,6 +207,14 @@ export default function AdminPage() {
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${lead.status === 'new' ? 'bg-green-100 text-green-700' : 'bg-steel-100 text-steel-600'}`}>
                           {lead.status}
                         </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <a 
+                          href={`mailto:${lead.email}?subject=Talent Centre - Re: Your ${lead.inquiryType}`}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-steel-100 text-steel-700 hover:bg-steel-200 text-sm font-medium transition-colors"
+                        >
+                          Respond ➔
+                        </a>
                       </td>
                     </tr>
                   ))}
