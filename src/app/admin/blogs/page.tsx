@@ -70,7 +70,8 @@ export default function AdminBlogsPage() {
             <p className="text-steel-500 mt-1">Manage articles and video blogs</p>
           </div>
           <div className="flex gap-3 items-center">
-            <Link href="/admin" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 mr-4 transition-colors">Go to Leads ➔</Link>
+            <Link href="/admin" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 transition-colors">Go to Leads ➔</Link>
+            <Link href="/admin/events" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 mr-4 transition-colors">Go to Events ➔</Link>
             <Link href="/admin/video-blogs/create" className="px-4 py-2 bg-charcoal-800 text-white rounded-xl flex items-center gap-2 hover:bg-charcoal-700 transition text-sm">
               <Video className="w-4 h-4"/> New Video
             </Link>

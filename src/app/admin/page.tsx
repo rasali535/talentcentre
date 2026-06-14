@@ -118,7 +118,8 @@ export default function AdminPage() {
             <p className="text-steel-500 text-sm mt-1">Manage and track all incoming inquiries</p>
           </div>
           <div className="flex gap-3 items-center">
-            <a href="/admin/blogs" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 mr-4 transition-colors">Go to Blogs ➔</a>
+            <a href="/admin/blogs" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 transition-colors">Go to Blogs ➔</a>
+            <a href="/admin/events" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 mr-4 transition-colors">Go to Events ➔</a>
             <button onClick={fetchLeads} disabled={loading} className="px-4 py-2 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors flex items-center gap-2">
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
             </button>
