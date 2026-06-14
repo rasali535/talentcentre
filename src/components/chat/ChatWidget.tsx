@@ -24,6 +24,7 @@ export default function ChatWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const [hasGreeted, setHasGreeted] = useState(false);
   const [showPulse, setShowPulse] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   
   // Lead Collection State
   const [hasCollectedLeadInfo, setHasCollectedLeadInfo] = useState(false);
@@ -127,7 +128,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed bottom-24 left-4 sm:left-6 w-[360px] sm:w-[400px] h-[560px] bg-white rounded-2xl shadow-premium-xl border border-steel-200 flex flex-col overflow-hidden z-50"
+            className="fixed bottom-24 right-4 sm:right-6 w-[360px] sm:w-[400px] h-[560px] bg-white rounded-2xl shadow-premium-xl border border-steel-200 flex flex-col overflow-hidden z-50"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-charcoal-700 to-charcoal-600 p-4 flex items-center justify-between flex-shrink-0">
@@ -300,7 +301,9 @@ export default function ChatWidget() {
       {/* Floating Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 left-4 sm:left-6 z-50 w-14 h-14 rounded-full shadow-premium-xl flex items-center justify-center transition-all duration-300 ${
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={`fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full shadow-premium-xl flex items-center justify-center transition-all duration-300 ${
           isOpen ? 'bg-steel-700 hover:bg-steel-800' : 'bg-accent-red hover:bg-accent-red-dark'
         }`}
         whileHover={{ scale: 1.05 }}
@@ -314,15 +317,15 @@ export default function ChatWidget() {
 
       {/* Welcome tooltip (only on first visit before opening) */}
       <AnimatePresence>
-        {showPulse && !isOpen && (
+        {isHovered && !isOpen && (
           <motion.div
-            initial={{ opacity: 0, x: -10 }}
+            initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -10 }}
-            className="fixed bottom-8 left-24 z-50 bg-white rounded-xl shadow-premium-lg border border-steel-200 px-4 py-3 max-w-[220px]"
+            exit={{ opacity: 0, x: 10 }}
+            className="fixed bottom-8 right-22 z-50 bg-white rounded-xl shadow-premium-lg border border-steel-200 px-4 py-3 max-w-[220px]"
           >
             <p className="text-sm text-charcoal-700 font-medium">How can we help your business grow today?</p>
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-2 h-2 bg-white border-l border-b border-steel-200 rotate-[45deg]" />
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-2 h-2 bg-white border-r border-b border-steel-200 rotate-[-45deg]" />
           </motion.div>
         )}
       </AnimatePresence>
