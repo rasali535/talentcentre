@@ -29,9 +29,7 @@ export default async function BlogsPage() {
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-steel-50 pt-32 pb-24">
+    <div className="min-h-screen bg-steel-50 pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-heading font-bold text-charcoal-800 mb-6 tracking-tight">Our Blog</h1>
@@ -70,8 +68,6 @@ export default async function BlogsPage() {
             </div>
           )}
         </div>
-      </div>
-      <Footer />
-    </>
+    </div>
   );
 }

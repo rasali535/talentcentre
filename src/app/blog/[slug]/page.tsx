@@ -36,9 +36,7 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
   }
 
   return (
-    <>
-      <Navbar />
-      <article className="min-h-screen bg-white pt-32 pb-24">
+    <article className="min-h-screen bg-white pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/blogs" className="inline-flex items-center gap-2 text-steel-500 hover:text-accent-red font-medium mb-12 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Blogs
@@ -84,8 +82,6 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
             <div className="prose prose-lg md:prose-xl max-w-none text-steel-800 marker:text-accent-red prose-headings:font-heading prose-headings:text-charcoal-800 prose-a:text-accent-red hover:prose-a:text-accent-red-dark prose-img:rounded-3xl prose-img:shadow-xl" dangerouslySetInnerHTML={{ __html: blog.content }} />
           )}
         </div>
-      </article>
-      <Footer />
-    </>
+    </article>
   );
 }
