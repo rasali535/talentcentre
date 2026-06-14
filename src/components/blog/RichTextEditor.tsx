@@ -6,14 +6,14 @@ import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Youtube from '@tiptap/extension-youtube';
 
-const extensions = [
-  StarterKit,
-  Image,
-  Link,
-  Youtube,
-];
-
 export default function RichTextEditor({ onChange }: { onChange?: (html: string) => void }) {
+  const extensions = React.useMemo(() => [
+    StarterKit,
+    Image,
+    Link.configure({ openOnClick: false }),
+    Youtube,
+  ], []);
+
   const editor = useEditor({
     extensions,
     content: '',

@@ -9,6 +9,7 @@ export async function GET() {
     const videoBlogs = await prisma.videoBlog.findMany({ orderBy: { createdAt: 'desc' } });
     return NextResponse.json({ videoBlogs });
   } catch (error) {
+    console.error('[GET /api/video-blogs] Error:', error);
     return NextResponse.json({ error: 'Failed to fetch video blogs' }, { status: 500 });
   }
 }
