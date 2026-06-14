@@ -115,16 +115,7 @@ export default function Navbar() {
 
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-3">
-              <a
-                href={`tel:${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+26775618647'}`}
-                className={`flex items-center gap-2 text-sm font-medium transition-colors duration-300 ${
-                  scrolled ? 'text-steel-500 hover:text-charcoal-700' : 'text-white/70 hover:text-white'
-                }`}
-              >
-                <Phone className="w-4 h-4" />
-                <span className="hidden xl:inline">+267 75 618 647</span>
-              </a>
-              <Button variant="primary" size="sm" href="/contact">
+              <Button variant="primary" size="sm" href="/contact" className="!py-1.5 !px-3 !text-xs rounded-lg">
                 Book Consultation
               </Button>
             </div>
@@ -197,7 +188,7 @@ export default function Navbar() {
                   </div>
                 ))}
                 <div className="mt-6 px-4">
-                  <Button variant="primary" size="lg" href="/contact" className="w-full">
+                  <Button variant="primary" size="md" href="/contact" className="w-full">
                     Book Consultation
                   </Button>
                 </div>
