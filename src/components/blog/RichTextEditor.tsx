@@ -6,14 +6,16 @@ import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Youtube from '@tiptap/extension-youtube';
 
+const extensions = [
+  StarterKit,
+  Image,
+  Link,
+  Youtube,
+];
+
 export default function RichTextEditor({ onChange }: { onChange?: (html: string) => void }) {
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Image,
-      Link,
-      Youtube,
-    ],
+    extensions,
     content: '',
     onUpdate: ({ editor }) => {
       onChange?.(editor.getHTML());
