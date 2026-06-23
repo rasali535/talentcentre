@@ -1,9 +1,17 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 const prisma = new PrismaClient();
-const resend = new Resend(process.env.RESEND_API_KEY || 'placeholder');
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp.resend.com',
+  port: parseInt(process.env.SMTP_PORT || '465'),
+  secure: true,
+  auth: {
+    user: process.env.SMTP_USER || 'resend',
+    pass: process.env.SMTP_PASS || process.env.RESEND_API_KEY,
+  },
+});
 
 export async function POST(req: Request) {
   try {
@@ -26,11 +34,11 @@ export async function POST(req: Request) {
       },
     });
 
-    // 2. Send email notification via Resend
-    if (process.env.RESEND_API_KEY) {
-      await resend.emails.send({
-        from: 'Events <onboarding@resend.dev>', // Should be verified domain in production e.g. events@talentcentre.co.za
-        to: ['events@talentcentre.co.za'],
+    // 2. Send email notification via Nodemailer
+    if (process.env.SMTP_PASS || process.env.RESEND_API_KEY) {
+      await transporter.sendMail({
+        from: process.env.SMTP_FROM || 'Events <onboarding@resend.dev>', // Should be verified domain in production e.g. events@talentcentre.co.za
+        to: 'events@talentcentre.co.za',
         subject: `New Registration: ${eventName}`,
         html: `
           <h2>New Event Registration</h2>
@@ -44,9 +52,9 @@ export async function POST(req: Request) {
       });
 
       // Send automated confirmation to the user
-      await resend.emails.send({
-        from: 'Talent Centre <onboarding@resend.dev>', // Update to verified domain in production
-        to: [email],
+      await transporter.sendMail({
+        from: process.env.SMTP_FROM || 'Talent Centre <onboarding@resend.dev>', // Update to verified domain in production
+        to: email,
         subject: `Registration Confirmed: ${eventName}`,
         html: `
           <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto;">

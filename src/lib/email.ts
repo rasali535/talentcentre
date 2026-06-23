@@ -1,4 +1,6 @@
-// Email utility - uses Resend when configured, falls back to console logging
+import nodemailer from 'nodemailer';
+
+// Email utility - uses Nodemailer when configured, falls back to console logging
 export async function sendEmail({
   to,
   subject,
@@ -8,7 +10,7 @@ export async function sendEmail({
   subject: string;
   html: string;
 }) {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.SMTP_PASS || process.env.RESEND_API_KEY;
 
   if (!apiKey) {
     console.log('📧 [EMAIL MOCK] Would send email:');
@@ -19,22 +21,24 @@ export async function sendEmail({
   }
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.resend.com',
+      port: parseInt(process.env.SMTP_PORT || '465'),
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER || 'resend',
+        pass: apiKey,
       },
-      body: JSON.stringify({
-        from: 'Talent Centre <notifications@talentcentre.co.za>',
-        to: [to],
-        subject,
-        html,
-      }),
     });
 
-    const data = await response.json();
-    return { success: response.ok, data };
+    const info = await transporter.sendMail({
+      from: process.env.SMTP_FROM || 'Talent Centre <notifications@talentcentre.co.za>',
+      to,
+      subject,
+      html,
+    });
+
+    return { success: true, data: info };
   } catch (error) {
     console.error('Email send failed:', error);
     return { success: false, error };

@@ -1,7 +1,15 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY || 'placeholder');
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp.resend.com',
+  port: parseInt(process.env.SMTP_PORT || '465'),
+  secure: true,
+  auth: {
+    user: process.env.SMTP_USER || 'resend',
+    pass: process.env.SMTP_PASS || process.env.RESEND_API_KEY,
+  },
+});
 
 export async function POST(req: Request) {
   try {
@@ -12,13 +20,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    if (!process.env.RESEND_API_KEY) {
-      return NextResponse.json({ error: 'Resend API key not configured' }, { status: 500 });
+    if (!process.env.SMTP_PASS && !process.env.RESEND_API_KEY) {
+      return NextResponse.json({ error: 'SMTP credentials not configured' }, { status: 500 });
     }
 
-    await resend.emails.send({
-      from: 'Talent Centre <onboarding@resend.dev>', // Update to verified domain in production
-      to: [to],
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM || 'Talent Centre <onboarding@resend.dev>', // Update to verified domain in production
+      to,
       subject,
       html: `
         <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto;">

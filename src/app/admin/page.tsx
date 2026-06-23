@@ -67,7 +67,9 @@ export default function AdminPage() {
     // Simple auth check against env vars (in production, use proper JWT)
     if (
       (username === 'admin' && password === 'TalentCentre2026!') ||
-      (username === 'admin@test.com' && password === 'admin123')
+      (username === 'admin@test.com' && password === 'admin123') ||
+      (username === 'tafadzwa@talentcentre.co.za' && password === 'Fadzi@2016') ||
+      (username === 'humphrey@talentcentre.co.za' && password === 'Talent2016')
     ) {
       localStorage.setItem('admin_token', process.env.JWT_SECRET || 'tc-jwt-secret-dev-only-change-in-prod');
       setAuthenticated(true);
