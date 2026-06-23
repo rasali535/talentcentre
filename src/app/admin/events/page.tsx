@@ -18,6 +18,7 @@ export default function AdminEventsPage() {
   const [replyTo, setReplyTo] = useState<{email: string, subject: string} | null>(null);
   const [replyMessage, setReplyMessage] = useState('');
   const [sending, setSending] = useState(false);
+  const [userName, setUserName] = useState('');
 
   const handleSendReply = async () => {
     if (!replyTo || !replyMessage) return;
@@ -59,10 +60,12 @@ export default function AdminEventsPage() {
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
+    const name = localStorage.getItem('admin_name');
     if (!token) {
       router.push('/admin');
     } else {
       setAuthenticated(true);
+      if (name) setUserName(name);
       fetchRegistrations();
     }
   }, [router, fetchRegistrations]);
@@ -77,13 +80,13 @@ export default function AdminEventsPage() {
             <h1 className="text-3xl font-heading font-bold text-charcoal-700">Event Registrations</h1>
             <p className="text-steel-600 mt-2">View all attendees who have registered for upcoming events.</p>
           </div>
-          <div className="flex gap-3 items-center">
-            <Link href="/admin" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 transition-colors">Go to Leads ➔</Link>
-            <Link href="/admin/blogs" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 mr-4 transition-colors">Go to Blogs ➔</Link>
+          <div className="flex gap-4 items-center">
+            {userName && <span className="text-sm font-medium text-steel-500 hidden sm:inline-block">Logged in as <strong className="text-charcoal-700">{userName}</strong></span>}
+            <Link href="/admin" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 transition-colors">➔ Dashboard</Link>
             <button onClick={fetchRegistrations} disabled={loading} className="px-4 py-2 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors flex items-center gap-2">
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
             </button>
-            <button onClick={() => { localStorage.removeItem('admin_token'); setAuthenticated(false); router.push('/admin'); }} className="px-4 py-2 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors">
+            <button onClick={() => { localStorage.removeItem('admin_token'); localStorage.removeItem('admin_name'); setAuthenticated(false); router.push('/admin'); }} className="px-4 py-2 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors">
               Logout
             </button>
           </div>

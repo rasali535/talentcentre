@@ -10,12 +10,16 @@ export default function AdminBlogsPage() {
   const [contentList, setContentList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    if (!localStorage.getItem('admin_token')) {
+    const token = localStorage.getItem('admin_token');
+    const name = localStorage.getItem('admin_name');
+    if (!token) {
       router.push('/admin');
     } else {
       setIsAuthenticated(true);
+      if (name) setUserName(name);
       Promise.all([
         fetch('/api/blogs').then(res => res.json()),
         fetch('/api/video-blogs').then(res => res.json())
@@ -69,16 +73,16 @@ export default function AdminBlogsPage() {
             <h1 className="text-3xl font-heading font-bold text-charcoal-700">Content Dashboard</h1>
             <p className="text-steel-500 mt-1">Manage articles and video blogs</p>
           </div>
-          <div className="flex gap-3 items-center">
-            <Link href="/admin" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 transition-colors">Go to Leads ➔</Link>
-            <Link href="/admin/events" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 mr-4 transition-colors">Go to Events ➔</Link>
+          <div className="flex gap-4 items-center">
+            {userName && <span className="text-sm font-medium text-steel-500 hidden sm:inline-block">Logged in as <strong className="text-charcoal-700">{userName}</strong></span>}
+            <Link href="/admin" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 transition-colors">➔ Dashboard</Link>
             <Link href="/admin/video-blogs/create" className="px-4 py-2 bg-charcoal-800 text-white rounded-xl flex items-center gap-2 hover:bg-charcoal-700 transition text-sm">
               <Video className="w-4 h-4"/> New Video
             </Link>
             <Link href="/admin/blogs/create" className="px-4 py-2 bg-accent-red text-white rounded-xl flex items-center gap-2 hover:bg-accent-red-dark transition text-sm">
               <Plus className="w-4 h-4"/> New Article
             </Link>
-            <button onClick={() => { localStorage.removeItem('admin_token'); window.location.href = '/admin'; }} className="px-4 py-2 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors ml-2">
+            <button onClick={() => { localStorage.removeItem('admin_token'); localStorage.removeItem('admin_name'); window.location.href = '/admin'; }} className="px-4 py-2 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors ml-2">
               Logout
             </button>
           </div>

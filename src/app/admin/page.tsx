@@ -1,108 +1,105 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Users, MessageSquare, TrendingUp, Clock, Search, Filter, LogIn, Shield, RefreshCw } from 'lucide-react';
-import Button from '@/components/ui/Button';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Users, Calendar, FileText, Video, LogIn, Shield, RefreshCw, LayoutDashboard } from 'lucide-react';
 
-interface Lead {
-  id: string; fullName: string; email: string; phone?: string; companyName?: string;
-  inquiryType: string; message: string; source: string; status: string; createdAt: string;
-}
-
-export default function AdminPage() {
+export default function AdminDashboardPage() {
+  const router = useRouter();
   const [authenticated, setAuthenticated] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
+  
+  // Login State
+  const [usernameInput, setUsernameInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
   const [authError, setAuthError] = useState('');
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
-  const [replyTo, setReplyTo] = useState<{email: string, subject: string} | null>(null);
-  const [replyMessage, setReplyMessage] = useState('');
-  const [sending, setSending] = useState(false);
 
-  const handleSendReply = async () => {
-    if (!replyTo || !replyMessage) return;
-    setSending(true);
-    try {
-      const res = await fetch('/api/respond', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ to: replyTo.email, subject: replyTo.subject, message: replyMessage }),
-      });
-      if (res.ok) {
-        setReplyTo(null);
-        setReplyMessage('');
-        alert('Response sent successfully!');
-      } else {
-        alert('Failed to send response.');
-      }
-    } catch {
-      alert('An error occurred.');
-    } finally {
-      setSending(false);
-    }
-  };
+  // Dashboard Data State
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({
+    leads: 0,
+    events: 0,
+    articles: 0,
+    videos: 0,
+  });
+  
+  const [recentLeads, setRecentLeads] = useState<any[]>([]);
+  const [recentEvents, setRecentEvents] = useState<any[]>([]);
 
-  const fetchLeads = useCallback(async () => {
+  const fetchDashboardData = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/leads', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token') || ''}` },
+      const [leadsRes, eventsRes, blogsRes, videoBlogsRes] = await Promise.all([
+        fetch('/api/leads', { headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token') || ''}` } }),
+        fetch('/api/events'),
+        fetch('/api/blogs'),
+        fetch('/api/video-blogs'),
+      ]);
+
+      const leadsData = leadsRes.ok ? await leadsRes.json() : { leads: [] };
+      const eventsData = eventsRes.ok ? await eventsRes.json() : { registrations: [] };
+      const blogsData = blogsRes.ok ? await blogsRes.json() : { blogs: [] };
+      const videoBlogsData = videoBlogsRes.ok ? await videoBlogsRes.json() : { videoBlogs: [] };
+
+      const leadsArr = leadsData.leads || [];
+      const eventsArr = eventsData.registrations || [];
+
+      setStats({
+        leads: leadsArr.length,
+        events: eventsArr.length,
+        articles: blogsData.blogs?.length || 0,
+        videos: videoBlogsData.videoBlogs?.length || 0,
       });
-      if (res.ok) {
-        const data = await res.json();
-        setLeads(data.leads || []);
-      }
-    } catch {
-      console.error('Failed to fetch leads');
+      
+      setRecentLeads(leadsArr.slice(0, 5));
+      setRecentEvents(eventsArr.slice(0, 5));
+    } catch (err) {
+      console.error('Failed to fetch dashboard data', err);
     } finally {
       setLoading(false);
     }
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem('admin_token');
+    const name = localStorage.getItem('admin_name');
+    if (token) {
+      setAuthenticated(true);
+      if (name) setUserName(name);
+      fetchDashboardData();
+    }
+  }, [fetchDashboardData]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple auth check against env vars (in production, use proper JWT)
-    if (
-      (username === 'admin' && password === 'TalentCentre2026!') ||
-      (username === 'admin@test.com' && password === 'admin123') ||
-      (username === 'tafadzwa@talentcentre.co.za' && password === 'Fadzi@2016') ||
-      (username === 'humphrey@talentcentre.co.za' && password === 'Talent2016')
-    ) {
+    let name = '';
+    
+    // Auth Check
+    if (usernameInput === 'admin' && passwordInput === 'TalentCentre2026!') name = 'Admin';
+    else if (usernameInput === 'admin@test.com' && passwordInput === 'admin123') name = 'Admin';
+    else if (usernameInput === 'tafadzwa@talentcentre.co.za' && passwordInput === 'Fadzi@2016') name = 'Tafadzwa';
+    else if (usernameInput === 'humphrey@talentcentre.co.za' && passwordInput === 'Talent2016') name = 'Humphrey';
+
+    if (name) {
       localStorage.setItem('admin_token', process.env.JWT_SECRET || 'tc-jwt-secret-dev-only-change-in-prod');
+      localStorage.setItem('admin_name', name);
+      setUserName(name);
       setAuthenticated(true);
       setAuthError('');
+      fetchDashboardData();
     } else {
       setAuthError('Invalid credentials');
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('admin_token');
-    if (token) {
-      setAuthenticated(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (authenticated) fetchLeads();
-  }, [authenticated, fetchLeads]);
-
-  const filteredLeads = leads.filter(l => {
-    const matchesSearch = l.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      l.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (l.companyName || '').toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filterType === 'all' || l.inquiryType === filterType;
-    return matchesSearch && matchesFilter;
-  });
-
-  const stats = {
-    total: leads.length,
-    consultation: leads.filter(l => l.inquiryType === 'consultation').length,
-    inquiry: leads.filter(l => l.inquiryType === 'inquiry').length,
-    partnership: leads.filter(l => l.inquiryType === 'partnership').length,
+  const handleLogout = () => {
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_name');
+    setAuthenticated(false);
+    setUserName('');
+    setUsernameInput('');
+    setPasswordInput('');
   };
 
   if (!authenticated) {
@@ -113,21 +110,21 @@ export default function AdminPage() {
             <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-4">
               <Shield className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-heading font-bold text-white">Admin Dashboard</h1>
-            <p className="text-steel-400 text-sm mt-2">Talent Centre Lead Management</p>
+            <h1 className="text-2xl font-heading font-bold text-white">Admin Portal</h1>
+            <p className="text-steel-400 text-sm mt-2">Talent Centre Management</p>
           </div>
-          <form onSubmit={handleLogin} className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8">
-            {authError && <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-300 text-sm">{authError}</div>}
-            <div className="space-y-4">
+          <form onSubmit={handleLogin} className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8 shadow-2xl">
+            {authError && <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-300 text-sm text-center">{authError}</div>}
+            <div className="space-y-5">
               <div>
-                <label className="block text-sm text-steel-300 mb-1.5">Username</label>
-                <input value={username} onChange={e => setUsername(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-steel-500" placeholder="admin" />
+                <label className="block text-sm font-medium text-steel-300 mb-1.5">Email / Username</label>
+                <input value={usernameInput} onChange={e => setUsernameInput(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-steel-500 focus:outline-none focus:border-accent-red transition-colors" placeholder="admin@talentcentre.co.za" />
               </div>
               <div>
-                <label className="block text-sm text-steel-300 mb-1.5">Password</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-steel-500" placeholder="••••••••" />
+                <label className="block text-sm font-medium text-steel-300 mb-1.5">Password</label>
+                <input type="password" value={passwordInput} onChange={e => setPasswordInput(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-steel-500 focus:outline-none focus:border-accent-red transition-colors" placeholder="••••••••" />
               </div>
-              <button type="submit" className="w-full px-4 py-3 rounded-xl bg-accent-red text-white font-semibold hover:bg-accent-red-dark transition-colors flex items-center justify-center gap-2">
+              <button type="submit" className="w-full px-4 py-3.5 mt-2 rounded-xl bg-accent-red text-white font-semibold hover:bg-accent-red-dark transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2 shadow-lg shadow-accent-red/20">
                 <LogIn className="w-4 h-4" /> Sign In
               </button>
             </div>
@@ -138,167 +135,159 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-steel-50 pt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-8">
+    <div className="min-h-screen bg-steel-50 pt-24 pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-4">
           <div>
-            <h1 className="text-3xl font-heading font-bold text-charcoal-700">Lead Dashboard</h1>
-            <p className="text-steel-500 text-sm mt-1">Manage and track all incoming inquiries</p>
+            <h1 className="text-4xl font-heading font-bold text-charcoal-700 tracking-tight">
+              Welcome back{userName ? `, ${userName}` : ''}! 👋
+            </h1>
+            <p className="text-steel-500 mt-2 text-lg">Here's what's happening with Talent Centre today.</p>
           </div>
           <div className="flex gap-3 items-center">
-            <a href="/admin/blogs" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 transition-colors">Go to Blogs ➔</a>
-            <a href="/admin/events" className="text-sm font-medium text-steel-600 hover:text-charcoal-800 mr-4 transition-colors">Go to Events ➔</a>
-            <button onClick={fetchLeads} disabled={loading} className="px-4 py-2 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors flex items-center gap-2">
+            <button onClick={fetchDashboardData} disabled={loading} className="px-5 py-2.5 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors shadow-sm flex items-center gap-2">
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
             </button>
-            <button onClick={() => { localStorage.removeItem('admin_token'); setAuthenticated(false); }} className="px-4 py-2 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors">
+            <button onClick={handleLogout} className="px-5 py-2.5 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors shadow-sm">
               Logout
             </button>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {[
-            { label: 'Total Leads', value: stats.total, icon: Users, color: 'text-accent-red bg-accent-red/10' },
-            { label: 'Consultations', value: stats.consultation, icon: TrendingUp, color: 'text-emerald-600 bg-emerald-100' },
-            { label: 'Inquiries', value: stats.inquiry, icon: MessageSquare, color: 'text-purple-600 bg-purple-100' },
-            { label: 'Partnerships', value: stats.partnership, icon: Clock, color: 'text-amber-600 bg-amber-100' },
-          ].map(s => (
-            <div key={s.label} className="bg-white rounded-xl border border-steel-200 p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className={`w-10 h-10 rounded-lg ${s.color.split(' ')[1]} flex items-center justify-center`}>
-                  <s.icon className={`w-5 h-5 ${s.color.split(' ')[0]}`} />
-                </div>
+        {/* Overview Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+          <div className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-accent-red/10 flex items-center justify-center">
+                <Users className="w-6 h-6 text-accent-red" />
               </div>
-              <p className="text-2xl font-heading font-bold text-charcoal-700">{s.value}</p>
-              <p className="text-steel-500 text-xs mt-1">{s.label}</p>
             </div>
-          ))}
-        </div>
-
-        {/* Filters */}
-        <div className="flex gap-4 mb-6 flex-wrap">
-          <div className="flex-1 min-w-[200px] relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-steel-400" />
-            <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Search leads..." className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-steel-200 text-sm" />
+            <p className="text-3xl font-heading font-bold text-charcoal-800">{loading ? '-' : stats.leads}</p>
+            <p className="text-steel-500 font-medium mt-1">Total Leads</p>
           </div>
-          <select value={filterType} onChange={e => setFilterType(e.target.value)} className="px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-sm text-steel-600">
-            <option value="all">All Types</option>
-            <option value="consultation">Consultations</option>
-            <option value="inquiry">Inquiries</option>
-            <option value="partnership">Partnerships</option>
-          </select>
+          
+          <div className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+                <Calendar className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
+            <p className="text-3xl font-heading font-bold text-charcoal-800">{loading ? '-' : stats.events}</p>
+            <p className="text-steel-500 font-medium mt-1">Event Registrations</p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <FileText className="w-6 h-6 text-emerald-600" />
+              </div>
+            </div>
+            <p className="text-3xl font-heading font-bold text-charcoal-800">{loading ? '-' : stats.articles}</p>
+            <p className="text-steel-500 font-medium mt-1">Published Articles</p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+                <Video className="w-6 h-6 text-purple-600" />
+              </div>
+            </div>
+            <p className="text-3xl font-heading font-bold text-charcoal-800">{loading ? '-' : stats.videos}</p>
+            <p className="text-steel-500 font-medium mt-1">Video Blogs</p>
+          </div>
         </div>
 
-        {/* Leads Table */}
-        <div className="bg-white rounded-2xl border border-steel-200 overflow-hidden">
-          {filteredLeads.length === 0 ? (
-            <div className="p-16 text-center">
-              <Users className="w-12 h-12 text-steel-300 mx-auto mb-4" />
-              <p className="text-steel-500 font-medium">No leads found</p>
-              <p className="text-steel-400 text-sm mt-1">Leads will appear here when forms are submitted.</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+          
+          {/* Recent Leads */}
+          <div className="bg-white rounded-2xl border border-steel-200 shadow-sm overflow-hidden flex flex-col">
+            <div className="p-6 border-b border-steel-100 flex justify-between items-center">
+              <h2 className="text-xl font-heading font-bold text-charcoal-700 flex items-center gap-2">
+                <Users className="w-5 h-5 text-accent-red" /> Recent Leads
+              </h2>
+              <Link href="/admin/leads" className="text-sm font-medium text-accent-red hover:text-accent-red-dark">View All ➔</Link>
             </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-steel-100">
-                    <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Name</th>
-                    <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Contact</th>
-                    <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Type</th>
-                    <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Source</th>
-                    <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Date</th>
-                    <th className="text-left px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Status</th>
-                    <th className="text-right px-6 py-3 text-xs font-semibold text-steel-500 uppercase tracking-wider">Actions</th>
+            <div className="flex-1 p-0 overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="bg-steel-50">
+                  <tr>
+                    <th className="px-6 py-3 text-xs font-semibold text-steel-500 uppercase">Name</th>
+                    <th className="px-6 py-3 text-xs font-semibold text-steel-500 uppercase">Type</th>
+                    <th className="px-6 py-3 text-xs font-semibold text-steel-500 uppercase">Date</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {filteredLeads.map(lead => (
-                    <tr key={lead.id} className="border-b border-steel-50 hover:bg-steel-50/50 transition-colors">
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-medium text-charcoal-700">{lead.fullName}</p>
-                        <p className="text-xs text-steel-400">{lead.companyName || 'No company'}</p>
-                      </td>
-                      <td className="px-6 py-4">
-                        <p className="text-sm text-steel-600">{lead.email}</p>
-                        <p className="text-xs text-steel-400">{lead.phone || '-'}</p>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${lead.inquiryType === 'consultation' ? 'bg-blue-100 text-blue-700' : lead.inquiryType === 'partnership' ? 'bg-amber-100 text-amber-700' : 'bg-purple-100 text-purple-700'}`}>
-                          {lead.inquiryType}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-steel-500">{lead.source}</td>
-                      <td className="px-6 py-4 text-sm text-steel-500">{new Date(lead.createdAt).toLocaleDateString()}</td>
-                      <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${lead.status === 'new' ? 'bg-green-100 text-green-700' : 'bg-steel-100 text-steel-600'}`}>
-                          {lead.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <button 
-                          onClick={() => setReplyTo({ email: lead.email, subject: `Talent Centre - Re: Your ${lead.inquiryType}` })}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-steel-100 text-steel-700 hover:bg-steel-200 text-sm font-medium transition-colors"
-                        >
-                          Respond ➔
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                <tbody className="divide-y divide-steel-50">
+                  {loading ? (
+                    <tr><td colSpan={3} className="p-6 text-center text-steel-500">Loading...</td></tr>
+                  ) : recentLeads.length === 0 ? (
+                    <tr><td colSpan={3} className="p-6 text-center text-steel-400">No leads found.</td></tr>
+                  ) : (
+                    recentLeads.map((lead: any) => (
+                      <tr key={lead.id} className="hover:bg-steel-50/50">
+                        <td className="px-6 py-4">
+                          <div className="text-sm font-medium text-charcoal-700">{lead.fullName}</div>
+                          <div className="text-xs text-steel-500">{lead.email}</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`px-2.5 py-1 rounded-md text-xs font-semibold ${lead.inquiryType === 'consultation' ? 'bg-blue-100 text-blue-700' : lead.inquiryType === 'partnership' ? 'bg-amber-100 text-amber-700' : 'bg-purple-100 text-purple-700'}`}>
+                            {lead.inquiryType}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-steel-500">{new Date(lead.createdAt).toLocaleDateString()}</td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
-          )}
-        </div>
-      </div>
+          </div>
 
-      {replyTo && (
-        <div className="fixed inset-0 bg-charcoal-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl">
-            <div className="p-6 border-b border-steel-100">
-              <h2 className="text-xl font-heading font-bold text-charcoal-800">Send Response</h2>
-              <p className="text-sm text-steel-500 mt-1">To: {replyTo.email}</p>
+          {/* Recent Event Registrations */}
+          <div className="bg-white rounded-2xl border border-steel-200 shadow-sm overflow-hidden flex flex-col">
+            <div className="p-6 border-b border-steel-100 flex justify-between items-center">
+              <h2 className="text-xl font-heading font-bold text-charcoal-700 flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-blue-600" /> Recent Event Registrations
+              </h2>
+              <Link href="/admin/events" className="text-sm font-medium text-blue-600 hover:text-blue-800">View All ➔</Link>
             </div>
-            <div className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-steel-700 mb-1">Subject</label>
-                <input 
-                  type="text" 
-                  value={replyTo.subject} 
-                  onChange={e => setReplyTo({...replyTo, subject: e.target.value})}
-                  className="w-full px-4 py-2 border border-steel-200 rounded-xl bg-steel-50 focus:bg-white" 
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-steel-700 mb-1">Message</label>
-                <textarea 
-                  rows={6}
-                  value={replyMessage}
-                  onChange={e => setReplyMessage(e.target.value)}
-                  placeholder="Type your response here..."
-                  className="w-full px-4 py-3 border border-steel-200 rounded-xl focus:bg-white"
-                />
-              </div>
-            </div>
-            <div className="p-6 border-t border-steel-100 bg-steel-50 flex justify-end gap-3">
-              <button 
-                onClick={() => { setReplyTo(null); setReplyMessage(''); }}
-                className="px-4 py-2 text-steel-600 font-medium hover:bg-steel-200 rounded-xl transition"
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={handleSendReply}
-                disabled={sending}
-                className="px-6 py-2 bg-accent-red text-white font-medium rounded-xl hover:bg-accent-red-dark disabled:opacity-50 transition"
-              >
-                {sending ? 'Sending...' : 'Send Message'}
-              </button>
+            <div className="flex-1 p-0 overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="bg-steel-50">
+                  <tr>
+                    <th className="px-6 py-3 text-xs font-semibold text-steel-500 uppercase">Attendee</th>
+                    <th className="px-6 py-3 text-xs font-semibold text-steel-500 uppercase">Event</th>
+                    <th className="px-6 py-3 text-xs font-semibold text-steel-500 uppercase">Date</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-steel-50">
+                  {loading ? (
+                    <tr><td colSpan={3} className="p-6 text-center text-steel-500">Loading...</td></tr>
+                  ) : recentEvents.length === 0 ? (
+                    <tr><td colSpan={3} className="p-6 text-center text-steel-400">No registrations found.</td></tr>
+                  ) : (
+                    recentEvents.map((reg: any) => (
+                      <tr key={reg.id} className="hover:bg-steel-50/50">
+                        <td className="px-6 py-4">
+                          <div className="text-sm font-medium text-charcoal-700">{reg.fullName}</div>
+                          <div className="text-xs text-steel-500">{reg.email}</div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-sm text-charcoal-700 font-medium truncate max-w-[150px]">{reg.eventName}</div>
+                        </td>
+                        <td className="px-6 py-4 text-sm text-steel-500">{new Date(reg.createdAt).toLocaleDateString()}</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
+          
         </div>
-      )}
+
+      </div>
     </div>
   );
 }
