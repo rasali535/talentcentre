@@ -7,6 +7,7 @@ import {
   Globe,
   ExternalLink,
   MapPin,
+  Linkedin,
 } from 'lucide-react';
 
 const footerLinks = {
@@ -42,12 +43,13 @@ export default function Footer() {
               </Link>
               <div className="flex items-center gap-3">
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/humphrey-chawafambira-6b2596a0/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-accent-red/20 transition-all duration-300"
+                  className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 hover:text-white hover:bg-blue-600 transition-all duration-300"
+                  title="LinkedIn"
                 >
-                  <Globe className="w-4 h-4" />
+                  <Linkedin className="w-4 h-4" />
                 </a>
                 <a
                   href="https://www.facebook.com/share/1Dxtw7xGNe/"

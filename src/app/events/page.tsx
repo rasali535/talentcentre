@@ -8,7 +8,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 
 const productivityProgrammes = [
-  { title: 'Dangers of familiarity in the workplace', date: 'Saturday 4 July 2026', time: '0900hrs to 1130hrs', price: 'P650' },
+  { title: 'Getting started on my side hustle', date: 'Saturday 4 July 2026', time: '0900hrs to 1130hrs', price: 'P650' },
   { title: 'Action towards your vision', date: 'Saturday 18 July 2026', time: '0900hrs to 1130hrs', price: 'P650' },
   { title: 'Building your team for better performance towards your vision', date: 'Saturday 1 August 2026', time: '0900hrs to 1130hrs', price: 'P650' },
   { title: 'The ROI of sharing your vision with your team', date: 'Saturday 15 August 2026', time: '0900hrs to 1130hrs', price: 'P650' },

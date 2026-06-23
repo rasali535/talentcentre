@@ -53,6 +53,19 @@ export async function POST(req: Request) {
             <h2>Registration Successful!</h2>
             <p>Dear ${fullName},</p>
             <p>Thank you for registering for <strong>${eventName}</strong>.</p>
+            <p>To finalize your booking, please make a payment using one of the following options:</p>
+            <ul style="list-style-type: none; padding: 0;">
+              <li><strong>Pay2cell:</strong> 75618647</li>
+              <li><strong>Orange Money:</strong> 78729907</li>
+              <li>
+                <strong>Bank Transfer:</strong><br/>
+                Account Name: Talent Centre Pty Ltd.<br/>
+                Bank: FNB Bank<br/>
+                Branch: Kgale Branch 284567<br/>
+                Account: 62338861364
+              </li>
+            </ul>
+            <p><strong>Reference:</strong> Full names</p>
             <p>We have successfully received your details and our team will be in touch with you shortly regarding the next steps and event details.</p>
             <br/>
             <p>Best regards,</p>
