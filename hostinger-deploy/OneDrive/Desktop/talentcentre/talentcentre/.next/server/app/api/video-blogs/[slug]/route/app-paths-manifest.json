@@ -1,0 +1,3 @@
+{
+  "/api/video-blogs/[slug]/route": "app/api/video-blogs/[slug]/route.js"
+}

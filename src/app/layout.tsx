@@ -7,7 +7,11 @@ import ChatWidget from "@/components/chat/ChatWidget";
 import CookieConsent from "@/components/ui/CookieConsent";
 
 export const metadata: Metadata = {
-  title: "Talent Centre | Strategic Consultancy for Sustainable Business Growth",
+  metadataBase: new URL("https://talentcentre.co.za"),
+  title: {
+    template: "%s | Talent Centre",
+    default: "Talent Centre | Strategic Consultancy for Sustainable Business Growth",
+  },
   description: "Talent Centre is a premium consultancy firm providing business advisory, talent management, training, and strategic consulting services across Southern Africa.",
   keywords: "business consultancy services, corporate advisory services, management consulting firm, strategic business consulting, talent management, HR advisory, training and development, organizational development",
   authors: [{ name: "Talent Centre Consultancy" }],

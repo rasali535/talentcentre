@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/admin/layout,_N_T_/admin/video-blogs/layout,_N_T_/admin/video-blogs/create/layout,_N_T_/admin/video-blogs/create/page,_N_T_/admin/video-blogs/create"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/admin/video-blogs/create/__PAGE__",
+    "/admin/video-blogs/create",
+    "/admin/video-blogs",
+    "/admin",
+    "/_index",
+    "/_head"
+  ]
+}
