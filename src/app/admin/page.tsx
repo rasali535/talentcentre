@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Users, Calendar, FileText, Video, LogIn, Shield, RefreshCw, LayoutDashboard } from 'lucide-react';
+import { Users, Calendar, FileText, Video, LogIn, Shield, RefreshCw, LayoutDashboard, Plus } from 'lucide-react';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -147,6 +147,9 @@ export default function AdminDashboardPage() {
             <p className="text-steel-500 mt-2 text-lg">Here's what's happening with Talent Centre today.</p>
           </div>
           <div className="flex gap-3 items-center">
+            <Link href="/admin/blogs/create" className="px-5 py-2.5 rounded-xl bg-accent-red text-white text-sm font-medium hover:bg-accent-red-dark transition-colors shadow-sm flex items-center gap-2 hidden sm:flex">
+              <Plus className="w-4 h-4" /> New Article
+            </Link>
             <button onClick={fetchDashboardData} disabled={loading} className="px-5 py-2.5 rounded-xl bg-white border border-steel-200 text-steel-600 text-sm font-medium hover:bg-steel-50 transition-colors shadow-sm flex items-center gap-2">
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
             </button>
@@ -158,45 +161,45 @@ export default function AdminDashboardPage() {
 
         {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          <div className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+          <Link href="/admin/leads" className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow group block">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-xl bg-accent-red/10 flex items-center justify-center">
-                <Users className="w-6 h-6 text-accent-red" />
+                <Users className="w-6 h-6 text-accent-red group-hover:scale-110 transition-transform" />
               </div>
             </div>
             <p className="text-3xl font-heading font-bold text-charcoal-800">{loading ? '-' : stats.leads}</p>
             <p className="text-steel-500 font-medium mt-1">Total Leads</p>
-          </div>
+          </Link>
           
-          <div className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+          <Link href="/admin/events" className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow group block">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-blue-600" />
+                <Calendar className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform" />
               </div>
             </div>
             <p className="text-3xl font-heading font-bold text-charcoal-800">{loading ? '-' : stats.events}</p>
             <p className="text-steel-500 font-medium mt-1">Event Registrations</p>
-          </div>
+          </Link>
 
-          <div className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+          <Link href="/admin/blogs" className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow group block">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center">
-                <FileText className="w-6 h-6 text-emerald-600" />
+                <FileText className="w-6 h-6 text-emerald-600 group-hover:scale-110 transition-transform" />
               </div>
             </div>
             <p className="text-3xl font-heading font-bold text-charcoal-800">{loading ? '-' : stats.articles}</p>
             <p className="text-steel-500 font-medium mt-1">Published Articles</p>
-          </div>
+          </Link>
 
-          <div className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow">
+          <Link href="/admin/blogs" className="bg-white rounded-2xl border border-steel-200 p-6 shadow-sm hover:shadow-md transition-shadow group block">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
-                <Video className="w-6 h-6 text-purple-600" />
+                <Video className="w-6 h-6 text-purple-600 group-hover:scale-110 transition-transform" />
               </div>
             </div>
             <p className="text-3xl font-heading font-bold text-charcoal-800">{loading ? '-' : stats.videos}</p>
             <p className="text-steel-500 font-medium mt-1">Video Blogs</p>
-          </div>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
