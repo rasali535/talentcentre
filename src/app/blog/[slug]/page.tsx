@@ -1,10 +1,11 @@
 import React from 'react';
 import { PrismaClient } from '@prisma/client';
 import { notFound } from 'next/navigation';
-import { Calendar, Clock, User, Share2, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import ShareButtons from '@/components/blog/ShareButtons';
 
 const prisma = process.env.DATABASE_URL ? new PrismaClient() : null;
 
@@ -59,9 +60,7 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
               <div className="flex items-center gap-2"><Calendar className="w-4 h-4"/> {new Date(blog.createdAt).toLocaleDateString()}</div>
               <div className="flex items-center gap-2"><Clock className="w-4 h-4"/> {blog.contentType === "Video" ? "Video Content" : "5 min read"}</div>
               <div className="ml-auto">
-                <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-steel-50 hover:bg-steel-100 transition-colors text-charcoal-700">
-                  <Share2 className="w-4 h-4" /> Share
-                </button>
+                <ShareButtons title={blog.title} />
               </div>
             </div>
           </header>
