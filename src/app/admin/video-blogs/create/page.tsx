@@ -131,10 +131,10 @@ export default function CreateVideoBlogPage() {
             </div>
             
             <div className="flex gap-4">
-              <button onClick={startCamera} className="flex-1 py-3 bg-steel-100 text-steel-700 rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-steel-200">
+              <button type="button" onClick={startCamera} className="flex-1 py-3 bg-steel-100 text-steel-700 rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-steel-200">
                 <Video className="w-4 h-4"/> Start Camera
               </button>
-              <button onClick={toggleRecording} className={`flex-1 py-3 text-white rounded-xl font-medium flex items-center justify-center gap-2 ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-charcoal-700 hover:bg-charcoal-800'}`}>
+              <button type="button" onClick={toggleRecording} className={`flex-1 py-3 text-white rounded-xl font-medium flex items-center justify-center gap-2 ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-charcoal-700 hover:bg-charcoal-800'}`}>
                 {isRecording ? <><StopCircle className="w-4 h-4"/> Stop Recording</> : <><Mic className="w-4 h-4"/> Record</>}
               </button>
             </div>

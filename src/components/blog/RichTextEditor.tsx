@@ -17,6 +17,7 @@ export default function RichTextEditor({ onChange, initialContent = '' }: { onCh
   const editor = useEditor({
     extensions,
     content: initialContent,
+    immediatelyRender: false,
     onUpdate: ({ editor }) => {
       onChange?.(editor.getHTML());
     },
