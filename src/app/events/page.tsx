@@ -8,7 +8,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 
 const productivityProgrammes = [
-  { title: 'Getting started on my side hustle', date: 'Saturday 4 July 2026', time: '0900hrs to 1130hrs', price: 'P650' },
+  { title: 'Getting started on my side hustle', date: 'Saturday 11 July 2026', time: '0900hrs to 1130hrs', price: 'P650' },
   { title: 'Action towards your vision', date: 'Saturday 18 July 2026', time: '0900hrs to 1130hrs', price: 'P650' },
   { title: 'Building your team for better performance towards your vision', date: 'Saturday 1 August 2026', time: '0900hrs to 1130hrs', price: 'P650' },
   { title: 'The ROI of sharing your vision with your team', date: 'Saturday 15 August 2026', time: '0900hrs to 1130hrs', price: 'P650' },
@@ -27,7 +27,7 @@ const productivityProgrammes = [
 export default function EventsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<{ title: string; type?: string } | null>(null);
-  
+
   // Form State
   const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', company: '' });
   const [loading, setLoading] = useState(false);
@@ -283,7 +283,7 @@ export default function EventsPage() {
                           <input name="company" value={formData.company} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-white border border-steel-200 text-charcoal-700 text-sm focus:ring-2 focus:ring-accent-red/20 outline-none" placeholder="Organization" />
                         </div>
                       </div>
-                      
+
                       <div className="pt-4 mt-6 border-t border-steel-100 flex justify-end gap-3">
                         <Button variant="ghost" onClick={handleClose} type="button">Cancel</Button>
                         <Button variant="primary" type="submit" disabled={loading} icon={loading ? undefined : <Send className="w-4 h-4" />}>
